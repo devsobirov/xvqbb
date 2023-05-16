@@ -27,7 +27,7 @@
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                {{ __('Users') }}
+                                Xodimlar
                             </span>
                         </a>
                     </li>

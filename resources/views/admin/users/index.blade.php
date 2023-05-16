@@ -7,7 +7,7 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                 <h2 class="page-title">
-                    Foydalanuvchilar
+                    Xodimlar
                 </h2>
                 <div class="text-muted mt-1">{{$users->firstItem()}}-{{$users->lastItem()}} of {{$users->total()}}</div>
                 </div>
@@ -16,7 +16,7 @@
                 <div class="d-flex">
                     <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search user…">
                     <a href="#" class="btn btn-primary">
-                        <x-svg.plus></x-svg.plus> New user
+                        <x-svg.plus></x-svg.plus> Yangi xodim
                     </a>
                 </div>
                 </div>
@@ -53,7 +53,11 @@
 
                                 </td>
                                 <td>{{ $user->created_at->format('d M Y') }}</td>
-                                <td></td>
+                                <td>
+                                    @if (!$user->isAdmin())
+                                        <a href="{{route('users.edit', $user->id)}}">Tahrirlash</a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -11,13 +11,13 @@
                     {{ config('app.name') }}
                 </div>
                     <h2 class="page-title">
-                        {{ __('My profile') }}
+                        {{ $user->name }} ma'lumotlarini tahrirlash
                     </h2>
                 </div>
             </div>
         </div>
     </div>
-    <div class="page-body" x-data="userCreate">
+    <div class="page-body" x-data="userEdit">
         <div class="container-xl">
 
             @if ($message = Session::get('success'))
@@ -37,15 +37,15 @@
             </div>
             @endif
 
-            <form action="{{ route('users.store') }}" method="POST" class="card" autocomplete="off">
+            <form action="{{ route('users.update', $user->id) }}" method="POST" class="card" autocomplete="off">
                 @csrf
-
+                @method('PATCH')
                 <div class="card-body">
 
                     <div class="row mb-3">
                         <div class="col-md-6 col-sm-12">
                             <label class="form-label required">{{ __('FIO') }}</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" value="{{ old('name')}}" required>
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" value="{{ $user->name}}" required>
                         </div>
                         @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -53,7 +53,7 @@
 
                         <div class="col-md-6 col-sm-12">
                             <label class="form-label required">{{ __('Email') }}</label>
-                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}" value="{{ old('email')}}" required>
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}" value="{{ $user->email}}" required>
                         </div>
                         @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -66,7 +66,7 @@
                             <select class="form-select" name="role" x-model="role" @change="setSelectTab()">
                                 <option value="" selected>Tanlang</option>
                                 @foreach (Role::ROLES as $id => $name)
-                                    <option value="{{$id}}">{{$name}}</option>
+                                    <option @selected($user->role == $id) value="{{$id}}">{{$name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -80,13 +80,13 @@
                             <select class="form-select" name="branch_id" :required="tab === 'branch'" x-show="tab === 'branch'" x-cloak>
                                 <option value="" selected disabled>Filailni tanlang</option>
                                 @foreach ($branches as $branch)
-                                    <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                    <option @selected($user->branch_id == $branch->id) value="{{$branch->id}}">{{$branch->name}}</option>
                                 @endforeach
                             </select>
                             <select class="form-select" name="department_id" :required="tab === 'department'" x-show="tab === 'department'" x-cloak>
                                 <option value="" selected disabled>Bo'limni Tanlang</option>
                                 @foreach ($departments as $department)
-                                    <option value="{{$department->id}}">{{$department->name}}</option>
+                                    <option @selected($user->department == $department->id) value="{{$department->id}}">{{$department->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -97,16 +97,16 @@
 
                     <div class="row mb-3">
                         <div class="col-md-6 col-sm-12">
-                            <label class="form-label required">Parol</label>
-                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('New password') }}">
+                            <label class="form-label required">Yangi Parol</label>
+                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Faqat parol ozgartirish uchun">
                         </div>
                         @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
 
                         <div class="col-md-6 col-sm-12">
-                            <label class="form-label required">Parolni takrorlang</label>
-                            <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="{{ __('New password confirmation') }}" autocomplete="new-password">
+                            <label class="form-label required">Yangi parolni takrorlang</label>
+                            <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Yangi parolni takrorlang" autocomplete="new-password">
                         </div>
                         @error('password_confirmation')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -127,10 +127,14 @@
 @endsection
 @section('custom_scripts')
 <script>
-    function userCreate() {
+    function userEdit() {
         return {
-            role: @json(old('role')),
+            role: '',
             tab: '',
+            init() {
+                this.role = @json($user->role);
+                this.setSelectTab();
+            },
             setSelectTab() {
                 if (parseInt(this.role) === 1 || parseInt(this.role) === 5) {
                     this.tab = 'department'

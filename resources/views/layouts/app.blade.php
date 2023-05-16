@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="alpineApp">
 
 <head>
     <meta charset="utf-8">
@@ -8,7 +8,9 @@
     <meta name="description" content="">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
     @vite('resources/sass/app.scss')
+    <style>[x-cloak] { display: none !important; }</style>
 
     <!-- Custom styles for this Page-->
     @yield('custom_styles')
@@ -99,6 +101,7 @@
 
     <!-- Core plugin JavaScript-->
     @vite('resources/js/app.js')
+    @include('layouts._init_alpine')
 
     <!-- Page level custom scripts -->
     @yield('custom_scripts')

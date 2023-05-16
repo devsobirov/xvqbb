@@ -29,7 +29,7 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class, 'department_id');
     }
 
-    public function workplace(): ?BelongsTo
+    public function workplace(): null|Branch|Department
     {
         return match ($this->role) {
             RoleHelper::ADMIN,
@@ -37,5 +37,10 @@ class User extends Authenticatable
             RoleHelper::REGIONAL_MANAGER => $this->branch,
             default => null
         };
+    }
+
+    public function isAdmin(): bool
+    {
+        return intval($this->role) === \Role::ADMIN;
     }
 }
