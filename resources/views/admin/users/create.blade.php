@@ -11,7 +11,7 @@
                     {{ config('app.name') }}
                 </div>
                     <h2 class="page-title">
-                        {{ __('My profile') }}
+                        Yangi xodim kiritish
                     </h2>
                 </div>
             </div>

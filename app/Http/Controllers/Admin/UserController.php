@@ -8,7 +8,6 @@ use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Branch;
 use App\Models\Department;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Log;
 
 class UserController extends Controller
@@ -42,7 +41,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->validated());
-        Log::info("#{auth()->id()} " . auth()->user()->name . ' created new user #' . $user->id . ' ' . $user->name);
+        Log::info("#" . auth()->id() . ' ' . auth()->user()->name . ' created new user #' . $user->id . ' ' . $user->name);
 
         return redirect()
             ->route('users.index')
@@ -52,7 +51,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated());
-        Log::info("#{auth()->id()} " . auth()->user()->name . ' updated user #' . $user->id . ' ' . $user->name);
+        Log::info("#" . auth()->id() . ' ' . auth()->user()->name . ' updated user #' . $user->id . ' ' . $user->name);
 
         return redirect()->back()->with('success', 'User successfully updated');
     }

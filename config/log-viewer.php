@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'route_path' => 'log-viewer',
+    'route_path' => 'logs', //-viewer',
 
     /*
     |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ return [
     |
     */
 
-    'timezone' => null,
+    'timezone' => 'Asia/Tashkent',
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +70,7 @@ return [
     */
 
     'middleware' => [
-        'auth',
+        'web', 'role:' . App\Helpers\RoleHelper::ADMIN,
         \Opcodes\LogViewer\Http\Middleware\AuthorizeLogViewer::class,
     ],
 

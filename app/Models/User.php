@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\RoleHelper;
+use App\Traits\HasRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, HasRole, Notifiable;
 
     protected $fillable = ['name', 'email', 'password', 'branch_id', 'department_id', 'role', 'is_active'];
 
@@ -37,10 +38,5 @@ class User extends Authenticatable
             RoleHelper::REGIONAL_MANAGER => $this->branch,
             default => null
         };
-    }
-
-    public function isAdmin(): bool
-    {
-        return intval($this->role) === \Role::ADMIN;
     }
 }

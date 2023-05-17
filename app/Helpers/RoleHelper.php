@@ -17,7 +17,7 @@ class RoleHelper
 
     public static function getRole($role = null): string
     {
-        if (self::hasRole($role)) {
+        if (self::roleExists($role)) {
             return self::ROLES[$role];
         }
         return "-";
@@ -28,7 +28,7 @@ class RoleHelper
         return self::ROLES;
     }
 
-    public static function hasRole($role): bool
+    public static function roleExists($role): bool
     {
         return array_key_exists($role, self::ROLES);
     }

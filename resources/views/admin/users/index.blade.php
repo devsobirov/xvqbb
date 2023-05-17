@@ -14,8 +14,8 @@
                 <!-- Page title actions -->
                 <div class="col-auto ms-auto d-print-none">
                 <div class="d-flex">
-                    <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search user…">
-                    <a href="#" class="btn btn-primary">
+                    {{-- <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search user…"> --}}
+                    <a href="{{route('users.create')}}" class="btn btn-primary">
                         <x-svg.plus></x-svg.plus> Yangi xodim
                     </a>
                 </div>
