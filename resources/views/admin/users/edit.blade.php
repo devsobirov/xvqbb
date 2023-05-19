@@ -86,7 +86,7 @@
                             <select class="form-select" name="department_id" :required="tab === 'department'" x-show="tab === 'department'" x-cloak>
                                 <option value="" selected disabled>Bo'limni Tanlang</option>
                                 @foreach ($departments as $department)
-                                    <option @selected($user->department == $department->id) value="{{$department->id}}">{{$department->name}}</option>
+                                    <option @selected($user->department_id == $department->id) value="{{$department->id}}">{{$department->name}}</option>
                                 @endforeach
                             </select>
                         </div>

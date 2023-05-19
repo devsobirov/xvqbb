@@ -11,7 +11,7 @@
                     {{ config('app.name') }}
                 </div>
                     <h2 class="page-title">
-                        {{ __('My profile') }}
+                       Mening akkauntim
                     </h2>
                 </div>
             </div>
@@ -45,32 +45,43 @@
 
 
                     <div class="mb-3">
-                        <label class="form-label required">{{ __('Name') }}</label>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required>                        
+                        <label class="form-label required">Ism Familiya</label>
+                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required>
                     </div>
                     @error('name')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
 
                     <div class="mb-3">
-                        <label class="form-label required">{{ __('Email address') }}</label>
+                        <label class="form-label required">Email</label>
                         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email') }}" value="{{ old('email', auth()->user()->email) }}" required>
                     </div>
                     @error('email')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
 
+                    @if (auth()->user()->isAdmin())
                     <div class="mb-3">
-                        <label class="form-label required">{{ __('New password') }}</label>
-                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('New password') }}">
+                        <label class="form-label required">Ish bo'limi</label>
+                        <select class="form-select" name="department_id" required>
+                            <option value="" selected disabled>Bo'limni tanlang</option>
+                            @foreach ($departments as $department)
+                                <option @selected(auth()->user()->department_id == $department->id) value="{{$department->id}}">{{$department->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
+                    <div class="mb-3">
+                        <label class="form-label required">Yangi parol</label>
+                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Faqat parolni o'zgartirish kerak bo'lsa kiriting">
                     </div>
                     @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
 
                     <div class="mb-3">
-                        <label class="form-label required">{{ __('New password confirmation') }}</label>
-                        <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="{{ __('New password confirmation') }}" autocomplete="new-password">
+                        <label class="form-label required">Yangi parolni takrorlang</label>
+                        <input type="password" name="password_confirmation" placeholder="Faqat parolni o'zgartirish kerak bo'lsa kiriting" class="form-control @error('password_confirmation') is-invalid @enderror" autocomplete="new-password">
                     </div>
                     @error('password_confirmation')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -79,7 +90,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
                 </div>
 
             </form>

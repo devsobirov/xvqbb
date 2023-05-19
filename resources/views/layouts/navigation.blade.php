@@ -22,7 +22,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown @if(request()->routeIs('branches.*') || request()->routeIs('departments.*')) active @endif">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-details" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -40,10 +40,10 @@
                             </span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item @if(request()->routeIs('branches.*')) active @endif" href="{{route('branches.index')}}">
                                 Filiallar
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item @if(request()->routeIs('departments.*')) active @endif" href="{{route('departments.index')}}">
                                 Rahbariyat
                             </a>
                             <a class="dropdown-item" href="{{route('log-viewer.index')}}">

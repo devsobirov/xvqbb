@@ -4,25 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Department;
 
 class ProfileController extends Controller
 {
     public function show()
     {
-        return view('auth.profile');
+        $departments = auth()->user()->isAdmin() ? Department::getForList() : [];
+        return view('auth.profile', compact('departments'));
     }
 
     public function update(ProfileUpdateRequest $request)
     {
+        $data = $request->validated();
         if ($request->password) {
-            auth()->user()->update(['password' => Hash::make($request->password)]);
+            $data['password'] = Hash::make($request->password);
         }
+        auth()->user()->update($data);
 
-        auth()->user()->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
-
-        return redirect()->back()->with('success', 'Profile updated.');
+        return redirect()->back()->with('success', 'Profil ma\'lumotlari yangilandi.');
     }
 }
