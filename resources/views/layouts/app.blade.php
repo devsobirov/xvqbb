@@ -9,8 +9,16 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     @vite('resources/sass/app.scss')
     <style>[x-cloak] { display: none !important; }</style>
+    <script>
+        let defaultHeaders = {
+            "Content-type": "application/json;charset=UTF-8",
+            "X-Requested-With": "XMLHttpRequest",
+            'X-CSRF-TOKEN' : '{!! csrf_token() !!}'
+        }
+    </script>
 
     <!-- Custom styles for this Page-->
     @yield('custom_styles')
@@ -60,6 +68,7 @@
 
 			</div>
 			<div class="page-wrapper">
+                @include('layouts._messages')
 
 				@yield('content')
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ProcessStatusHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,5 +39,13 @@ class Process extends Model
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'filable');
+    }
+
+    public function publish()
+    {
+        if (!$this->status || $this->status == ProcessStatusHelper::PENDING) {
+            $this->status = ProcessStatusHelper::PUBLISHED;
+            $this->save();
+        }
     }
 }

@@ -14,10 +14,10 @@ class Task extends Model
 
     protected $guarded = [];
 
-    protected $dates = [
-        'starts_at',
-        'expires_at',
-        'published_at' // null = draft
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'expires_at' => 'datetime',
+        'published_at' => 'datetime' // null = draft
     ];
 
     public function department(): BelongsTo
@@ -38,5 +38,23 @@ class Task extends Model
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'filable');
+    }
+
+    public function getUploadDirName(): string
+    {
+        return 'task_' . $this->id;
+    }
+
+    public function publish()
+    {
+        if (!$this->published()) {
+            $this->published_at = now();
+            $this->save();
+        }
+    }
+
+    public function published(): bool
+    {
+        return !!$this->published_at;
     }
 }

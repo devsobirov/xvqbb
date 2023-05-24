@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->unsignedBigInteger('taks_id');
+            $table->unsignedBigInteger('task_id');
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('department_id');
             $table->integer('status')->nullable()->default(0);

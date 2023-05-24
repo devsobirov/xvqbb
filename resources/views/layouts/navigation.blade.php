@@ -13,6 +13,15 @@
                         </a>
                     </li>
 
+                    <li class="nav-item @if(request()->routeIs('head.tasks.*')) active @endif">
+                        <a class="nav-link" href="{{ route('head.tasks.index') }}" >
+                            <x-svg.tasks></x-svg.tasks>
+                            <span class="nav-link-title">
+                                Topshiriqlar
+                            </span>
+                        </a>
+                    </li>
+
                     <li class="nav-item @if(request()->routeIs('users.*')) active @endif">
                         <a class="nav-link" href="{{ route('users.index') }}" >
                             <x-svg.users></x-svg.users>
@@ -24,19 +33,11 @@
 
                     <li class="nav-item dropdown @if(request()->routeIs('branches.*') || request()->routeIs('departments.*')) active @endif">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                            <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-details" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M13 5h8"></path>
-                                    <path d="M13 9h5"></path>
-                                    <path d="M13 15h8"></path>
-                                    <path d="M13 19h5"></path>
-                                    <rect x="3" y="4" width="6" height="6" rx="1"></rect>
-                                    <rect x="3" y="14" width="6" height="6" rx="1"></rect>
-                                </svg>
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <x-svg.settings></x-svg.settings>
                             </span>
                             <span class="nav-link-title">
-                            Sozlamalar
+                                Sozlamalar
                             </span>
                         </a>
                         <div class="dropdown-menu">
