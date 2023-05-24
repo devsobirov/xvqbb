@@ -12,6 +12,6 @@ class ProcessController extends Controller
 {
     public function task(Task $task)
     {
-        dd($task, $task->processes);
+        dd($task, $task->processes, auth()->user()->notifications);
     }
 }

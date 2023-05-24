@@ -18196,7 +18196,18 @@
      
 }
 
-        namespace Barryvdh\Debugbar\Facades { 
+        namespace App\Helpers { 
+            /**
+     * 
+     *
+     */ 
+        class RoleHelper {
+         
+    }
+     
+}
+
+    namespace Barryvdh\Debugbar\Facades { 
             /**
      * 
      *
@@ -23316,6 +23327,7 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
+            class Role extends \App\Helpers\RoleHelper {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
             class LogViewer extends \Opcodes\LogViewer\Facades\LogViewer {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\TaskPublished;
+use App\Listeners\NotifyAssignedTask;
 use App\Listeners\PublishProcesses;
 use App\Models\Task;
 use App\Observers\TaskObserver;
@@ -23,7 +24,8 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         TaskPublished::class => [
-            PublishProcesses::class
+            PublishProcesses::class,
+            NotifyAssignedTask::class
         ]
     ];
 

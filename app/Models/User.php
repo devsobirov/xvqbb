@@ -7,12 +7,13 @@ use App\Traits\HasRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\HasDatabaseNotifications;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasRole, Notifiable;
+    use HasApiTokens, HasFactory, HasRole, Notifiable, HasDatabaseNotifications;
 
     protected $fillable = ['name', 'email', 'password', 'branch_id', 'department_id', 'role', 'is_active'];
 
