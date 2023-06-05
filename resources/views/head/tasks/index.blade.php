@@ -61,6 +61,9 @@
                                     @if ($item->department_id == auth()->user()->department_id && !$item->published_at)
                                         <a href="{{route('head.tasks.edit', $item->id)}}">Davom ettirish</a>
                                     @endif
+                                    @if ($item->department_id == auth()->user()->department_id && $item->published_at)
+                                        <a href="{{route('head.process.task', $item->id)}}">Boshqarish</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

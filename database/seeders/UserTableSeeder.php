@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,8 +22,9 @@ class UserTableSeeder extends Seeder
                     'created_at' => now(),
                     'updated_at' => now(),
                     'branch_id' => null,
-                    'department_id' => null,
-                    'role' => 1
+                    'department_id' => 1,
+                    'role' => \Role::ADMIN,
+                    'telegram_chat_id' => '70130832'
                 ],
                 [
                     'name' => 'Sobirov Otabek',
@@ -32,12 +34,41 @@ class UserTableSeeder extends Seeder
                     'created_at' => now(),
                     'updated_at' => now(),
                     'branch_id' => null,
-                    'department_id' => null,
-                    'role' => 1
+                    'department_id' => DB::table('departments')->select('id')->inRandomOrder()->limit(1)->get()->first()->id,
+                    'role' => \Role::ADMIN,
+                    'telegram_chat_id' => '70130832'
                 ]
             ];
 
             DB::table('users')->insert($users);
+
+            foreach (DB::table('branches')->get() as $branch) {
+                User::create([
+                   'name' => $branch->name,
+                   'email' => 'filial_'.$branch->id.'@mail.com',
+                   'password' => Hash::make('secret'),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'branch_id' => $branch->id,
+                    'department_id' => null,
+                    'role' => \Role::REGIONAL_MANAGER,
+                    'telegram_chat_id' => '70130832'
+                ]);
+            }
+
+            foreach (DB::table('departments')->get() as $department) {
+                User::create([
+                    'name' => $department->name,
+                    'email' => 'department_'.$department->id.'@mail.com',
+                    'password' => Hash::make('secret'),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'branch_id' => null,
+                    'department_id' => $department->id,
+                    'role' => \Role::HEAD_MANAGER,
+                    'telegram_chat_id' => '70130832'
+                ]);
+            }
         }
     }
 }

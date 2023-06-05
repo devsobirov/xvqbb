@@ -17,7 +17,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $paginated = Task::with('department:id,name', 'user:id,name')->paginate();
+        $paginated = Task::with('department:id,name', 'user:id,name')->latest()->paginate();
         return view('head.tasks.index', compact('paginated'));
     }
 

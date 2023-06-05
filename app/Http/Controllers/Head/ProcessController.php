@@ -12,6 +12,13 @@ class ProcessController extends Controller
 {
     public function task(Task $task)
     {
-        dd($task, $task->processes, auth()->user()->notifications);
+        $processes = $task->processes()
+            ->orderBy('status', 'desc')
+            ->orderBy('completed_at')
+            ->with('branch:id,name')
+            ->withCount('files')
+            ->get();
+
+        return view('head.processes.task', compact('task', 'processes'));
     }
 }

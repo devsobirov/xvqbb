@@ -13,6 +13,7 @@
                         </a>
                     </li>
 
+                    @if(auth()->user()->isManager())
                     <li class="nav-item @if(request()->routeIs('head.tasks.*')) active @endif">
                         <a class="nav-link" href="{{ route('head.tasks.index') }}" >
                             <x-svg.tasks></x-svg.tasks>
@@ -21,13 +22,26 @@
                             </span>
                         </a>
                     </li>
+                    @endif
+
+                    @if(auth()->user()->isBranchManager())
+                        <li class="nav-item @if(request()->routeIs('branch.tasks.*')) active @endif">
+                            <a class="nav-link" href="{{ route('branch.tasks.index') }}" >
+                                <x-svg.tasks></x-svg.tasks>
+                                <span class="nav-link-title">
+                                Topshiriqlar
+                            </span>
+                            </a>
+                        </li>
+                    @endif
+                    @if(auth()->user()->isAdmin())
 
                     <li class="nav-item @if(request()->routeIs('users.*')) active @endif">
                         <a class="nav-link" href="{{ route('users.index') }}" >
                             <x-svg.users></x-svg.users>
                             <span class="nav-link-title">
-                                Xodimlar
-                            </span>
+                            Xodimlar
+                        </span>
                         </a>
                     </li>
 
@@ -68,7 +82,7 @@
                             </div> --}}
                         </div>
                     </li>
-
+                    @endif
                 </ul>
             </div>
         </div>

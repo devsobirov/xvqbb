@@ -15,6 +15,8 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::post('/file/upload', [FileController::class, 'upload'])->name('file.upload');
     Route::delete('/file/delete/{file?}', [FileController::class, 'delete'])->name('file.delete');
+    Route::delete('notifications/{id}', [\App\Http\Controllers\NotificationController::class, 'delete'])
+        ->name('notifications.delete');
 
     Route::middleware('role:' . Role::ADMIN)->group(function () {
         Route::resource('users', UserController::class)->except(['destroy', 'show'])->names('users');
@@ -44,6 +46,14 @@ Route::middleware(['auth', 'role'])->group(function () {
 
     Route::middleware('role:' . Role::REGIONAL_MANAGER)->prefix('branch')->as('branch.')->group(function () {
         Route::get('/', App\Http\Controllers\Branch\DashboardController::class)->name('home');
+
+        Route::controller(\App\Http\Controllers\Branch\ProcessController::class)->prefix('tasks')->as('tasks.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/task/{process}', 'show')->name('show');
+            Route::get('/get-files/{process}', 'getFiles')->name('getFiles');
+            Route::delete('/delete-file/{process}/{file?}', 'deleteFile')->name('deleteFile');
+        });
     });
 });
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class DepartmentTableSeeder extends Seeder
 {
     public static $departmentList = [
-        ['name' => 'Direktor'],
+        ['name' => 'Direktorat'],
         ['name' => 'Kadrlar bo\'limi'],
         ['name' => 'Buxgalter'],
     ];

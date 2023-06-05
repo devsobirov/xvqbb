@@ -41,11 +41,46 @@ class Process extends Model
         return $this->morphMany(File::class, 'filable');
     }
 
-    public function publish()
+    public function publish(): bool
     {
         if (!$this->status || $this->status == ProcessStatusHelper::PENDING) {
             $this->status = ProcessStatusHelper::PUBLISHED;
-            $this->save();
+            return $this->save();
         }
+        return false;
+    }
+
+    public function getStatusName(): string
+    {
+        return ProcessStatusHelper::getStatusName($this->status);
+    }
+
+    public function getStatusColor($status = null): string
+    {
+        return ProcessStatusHelper::getStatusColor($status ? $status : $this->status);
+    }
+
+    public function lastStatusChanged(): ?\Illuminate\Support\Carbon
+    {
+        $tmp = ProcessStatusHelper::getTimestampName($this->status);
+        if ($tmp) {
+            return $this->$tmp;
+        }
+        return null;
+    }
+
+    public function updatedAt($status = null): ?\Illuminate\Support\Carbon
+    {
+        $tmp = ProcessStatusHelper::getTimestampName($status ? $status : $this->status);
+        if ($tmp) {
+            return $this->$tmp;
+        }
+        return null;
+    }
+
+    public function getUploadDirName(): string
+    {
+        $base = $this->task->getUploadDirName();
+        return $base . DIRECTORY_SEPARATOR . 'filail_' . $this->id;
     }
 }
