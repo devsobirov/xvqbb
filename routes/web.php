@@ -2,11 +2,19 @@
 
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\TelegramController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Head\ProcessController;
 use App\Http\Controllers\Head\TaskController;
+
+Route::controller(TelegramController::class)->prefix('telegram')->as('telegram.')->group(function () {
+    Route::get('set-webhook', 'setWebhook')->name('setWebhook')->middleware('role:'. Role::ADMIN);
+    Route::get('start', 'start')->name('setWebhook')->middleware('start');
+    Route::post('get-updates', 'getUpdates')->name('getUpdates');
+    Route::post('unsubscribe', 'unsubscribe')->name('unsubscribe');
+});
 
 Route::middleware(['auth', 'role'])->group(function () {
 

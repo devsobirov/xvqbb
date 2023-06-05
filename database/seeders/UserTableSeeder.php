@@ -24,7 +24,7 @@ class UserTableSeeder extends Seeder
                     'branch_id' => null,
                     'department_id' => 1,
                     'role' => \Role::ADMIN,
-                    'telegram_chat_id' => '70130832'
+                    'telegram_chat_id' => ''
                 ],
                 [
                     'name' => 'Sobirov Otabek',
@@ -36,7 +36,7 @@ class UserTableSeeder extends Seeder
                     'branch_id' => null,
                     'department_id' => DB::table('departments')->select('id')->inRandomOrder()->limit(1)->get()->first()->id,
                     'role' => \Role::ADMIN,
-                    'telegram_chat_id' => '70130832'
+                    'telegram_chat_id' => ''
                 ]
             ];
 
@@ -52,7 +52,7 @@ class UserTableSeeder extends Seeder
                     'branch_id' => $branch->id,
                     'department_id' => null,
                     'role' => \Role::REGIONAL_MANAGER,
-                    'telegram_chat_id' => '70130832'
+                    'telegram_chat_id' => ''
                 ]);
             }
 
@@ -66,7 +66,7 @@ class UserTableSeeder extends Seeder
                     'branch_id' => null,
                     'department_id' => $department->id,
                     'role' => \Role::HEAD_MANAGER,
-                    'telegram_chat_id' => '70130832'
+                    'telegram_chat_id' => ''
                 ]);
             }
         }

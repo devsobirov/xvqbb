@@ -7,7 +7,7 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
-            
+
             <div class="alert alert-success">
                 <div class="alert-title">
                     {{ __('Welcome') }} {{ auth()->user()->name ?? null }}
@@ -15,6 +15,10 @@
                 <div class="text-muted">
                     {{ __('You are logged in!') }}
                 </div>
+
+                @if(auth()->user()->telegram_chat_id)
+                    <a href="{{route('telegram.start')}}" class="btn btn-info">Subscribe to telegram</a>
+                @endif
             </div>
 
         </div>
