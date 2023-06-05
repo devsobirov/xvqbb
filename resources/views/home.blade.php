@@ -16,8 +16,8 @@
                     {{ __('You are logged in!') }}
                 </div>
 
-                @if(auth()->user()->telegram_chat_id)
-                    <a href="{{route('telegram.start')}}" class="btn btn-info">Subscribe to telegram</a>
+                @if(!auth()->user()->telegram_chat_id)
+                    <a href="{{route('telegram.start')}}" target="_blank" class="btn btn-info">Subscribe to telegram</a>
                 @endif
             </div>
 
