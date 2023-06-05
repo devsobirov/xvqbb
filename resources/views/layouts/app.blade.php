@@ -24,7 +24,7 @@
     @yield('custom_styles')
 
 </head>
-<body class="theme-light">
+<body :class="dark ? 'theme-dark' : 'theme-light'">
     <div class="page">
         <div class="sticky-top">
 			<header class="navbar navbar-expand-md navbar-light sticky-top d-print-none">
@@ -38,7 +38,12 @@
 						</a>
 					</h1>
 					<div class="navbar-nav flex-row order-md-last">
-
+                        <div class="d-none d-md-flex me-2">
+                            <a x-cloak href="#" @click.prevent="toggleTheme()" class="nav-link px-0" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable light mode" :data-bs-original-title="dark ? `Yorug' rejinmi yoqish` : `Qorong'i rejimni yoqish`">
+                                <span x-cloak x-show="!dark"><x-svg.moon></x-svg.moon></span>
+                                <span x-cloak x-show="dark"><x-svg.sun></x-svg.sun></span>
+                            </a>
+                        </div>
 						@auth
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">

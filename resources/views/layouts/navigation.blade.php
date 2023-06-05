@@ -27,10 +27,12 @@
                     @if(auth()->user()->isBranchManager())
                         <li class="nav-item @if(request()->routeIs('branch.tasks.*')) active @endif">
                             <a class="nav-link" href="{{ route('branch.tasks.index') }}" >
-                                <x-svg.tasks></x-svg.tasks>
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <x-svg.tasks></x-svg.tasks>
+                                </span>
                                 <span class="nav-link-title">
-                                Topshiriqlar
-                            </span>
+                                    Topshiriqlar
+                                </span>
                             </a>
                         </li>
                     @endif
@@ -38,10 +40,12 @@
 
                     <li class="nav-item @if(request()->routeIs('users.*')) active @endif">
                         <a class="nav-link" href="{{ route('users.index') }}" >
-                            <x-svg.users></x-svg.users>
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <x-svg.users></x-svg.users>
+                            </span>
                             <span class="nav-link-title">
-                            Xodimlar
-                        </span>
+                                Xodimlar
+                            </span>
                         </a>
                     </li>
 
@@ -64,25 +68,17 @@
                             <a class="dropdown-item" href="{{route('log-viewer.index')}}">
                                 Jurnal (Log)
                             </a>
-                            {{-- <div class="dropend">
-                                <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                    Submenu Item #2
-                                </a>
-                                <div class="dropdown-menu">
-                                  <a href="#" class="dropdown-item">
-                                    Subsubmenu Item #1
-                                  </a>
-                                  <a href="#" class="dropdown-item">
-                                    Subsubmenu Item #2
-                                  </a>
-                                  <a href="#" class="dropdown-item">
-                                    Subsubmenu Item #3
-                                  </a>
-                                </div>
-                            </div> --}}
                         </div>
                     </li>
                     @endif
+
+                    <li class="nav-item d-md-none d-sm-block">
+                        <a x-cloak href="#" @click.prevent="toggleTheme()" class="nav-link">
+                            <span x-cloak x-show="!dark" class="nav-link-icon d-md-none d-lg-inline-block"><x-svg.moon></x-svg.moon></span>
+                            <span x-cloak x-show="dark" class="nav-link-icon d-md-none d-lg-inline-block"><x-svg.sun></x-svg.sun></span>
+                            <span x-text="dark ? `Yorug' rejinmi yoqish` : `Qorong'i rejimni yoqish`"></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
