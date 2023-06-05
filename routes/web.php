@@ -11,7 +11,7 @@ use App\Http\Controllers\Head\TaskController;
 
 Route::controller(TelegramController::class)->prefix('telegram')->as('telegram.')->group(function () {
     Route::get('set-webhook', 'setWebhook')->name('setWebhook')->middleware('role:'. Role::ADMIN);
-    Route::get('start', 'start')->name('setWebhook')->middleware('role');
+    Route::get('start', 'start')->name('start')->middleware('role');
     Route::post('get-updates', 'getUpdates')->name('getUpdates');
     Route::post('unsubscribe', 'unsubscribe')->name('unsubscribe');
 });
