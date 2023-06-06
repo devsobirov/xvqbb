@@ -43,6 +43,8 @@ class TelegramController extends Controller
             // Chat ID
             $chatId = $updates['message']['chat']['id'];
             $text = strtolower(trim($updates['message']['text']));
+        } else {
+            return 'OK';
         }
 
         if ($secret = $this->extractToken($text)) {
@@ -57,6 +59,13 @@ class TelegramController extends Controller
                 (new TelegramBotService())->notify($user, 'Salom '. $user->name . '! Siz bot orqali bildirishnomalarga obuna bo\'ldingiz!' );
 
                 return 'OK';
+            } else {
+                \Log::alert('Telegram bot subscription failed', [
+                    'token' => $secret,
+                    'user' => $user
+                ]);
+
+                (new TelegramBotService())->sendMessage($chatId, "Bildirishnomalarga obuna bo'lish muvaffaqiyatsiz yakunlandi, qayta urinib ko'ring yoki admin bilan bog'laning");
             }
 
         }

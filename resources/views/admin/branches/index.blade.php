@@ -31,6 +31,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nomi</th>
+                                <th>Prefiks</th>
                                 <th>Xodimlar</th>
                                 <th></th>
                             </tr>
@@ -42,6 +43,11 @@
                                 <td>
                                     <div class="flex-fill py-1">
                                         <div class="font-weight-medium">{{ $item->name }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex-fill py-1">
+                                        <div class="font-weight-medium">{{ $item->prefix }}</div>
                                     </div>
                                 </td>
                                 <td>

@@ -36,6 +36,18 @@ class UserTableSeeder extends Seeder
                     'branch_id' => null,
                     'department_id' => DB::table('departments')->select('id')->inRandomOrder()->limit(1)->get()->first()->id,
                     'role' => \Role::ADMIN,
+                    'telegram_chat_id' => '70130832'
+                ],
+                [
+                    'name' => 'Karim Benzema',
+                    'email' => 'manager@mail.com',
+                    'password' => Hash::make('secret'),
+                    'email_verified_at' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'branch_id' => null,
+                    'department_id' => DB::table('departments')->select('id')->inRandomOrder()->limit(1)->get()->first()->id,
+                    'role' => \Role::HEAD_MANAGER,
                     'telegram_chat_id' => ''
                 ]
             ];
@@ -45,7 +57,7 @@ class UserTableSeeder extends Seeder
             foreach (DB::table('branches')->get() as $branch) {
                 User::create([
                    'name' => $branch->name,
-                   'email' => 'filial_'.$branch->id.'@mail.com',
+                   'email' => $branch->prefix.'@mail.com',
                    'password' => Hash::make('secret'),
                     'created_at' => now(),
                     'updated_at' => now(),

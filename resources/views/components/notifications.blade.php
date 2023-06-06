@@ -1,5 +1,5 @@
 @php $total = count(auth()->user()->notifications);@endphp
-<div class="card" style="max-height: 28rem; height: auto">
+<div class="card shadow" style="max-height: 28rem; height: auto">
     <div class="card-header justify-content-between">
         <div>Bildirishnomalar ({{$total}})</div>
 {{--        @if($total)--}}

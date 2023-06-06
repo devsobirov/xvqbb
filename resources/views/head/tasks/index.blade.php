@@ -29,7 +29,7 @@
                     <table class="table" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>№</th>
+                                <th>№ - Kod</th>
                                 <th>Nomi</th>
                                 <th>Muddat</th>
                                 <th>Ma'sul</th>
@@ -40,7 +40,7 @@
                         <tbody>
                         @foreach($paginated as $item)
                             <tr>
-                                <td>{{$item->id}}</td>
+                                <td>{{$item->id}} - <span class="badge bg-azure">{{$item->code}}</span></td>
                                 <td>
                                     <div class="flex-fill py-1">
                                         <div class="font-weight-medium">{{ $item->title }}</div>

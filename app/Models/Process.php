@@ -81,6 +81,6 @@ class Process extends Model
     public function getUploadDirName(): string
     {
         $base = $this->task->getUploadDirName();
-        return $base . DIRECTORY_SEPARATOR . 'filail_' . $this->id;
+        return $base . DIRECTORY_SEPARATOR . $this->branch->prefix;
     }
 }

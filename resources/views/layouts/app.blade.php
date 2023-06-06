@@ -11,6 +11,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     @vite('resources/sass/app.scss')
+    <style>
+        .divide-y>:not(template):not(:last-child) {padding-bottom: unset !important;}
+        .divide-y>:not(template):not(:first-child) {padding-top: unset !important;}
+    </style>
     <style>[x-cloak] { display: none !important; }</style>
     <script>
         let defaultHeaders = {
@@ -53,12 +57,12 @@
 								</div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<a href="{{ route('profile.show') }}" class="dropdown-item">{{ __('Profile') }}</a>
+								<a href="{{ route('profile.show') }}" class="dropdown-item">Mening akkauntim</a>
 								<div class="dropdown-divider"></div>
 								<form method="POST" action="{{ route('logout') }}">
 									@csrf
 									<a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
-										{{ __('Log Out') }}
+										Chiqish
 									</a>
 								</form>
 							</div>
@@ -82,8 +86,7 @@
 						<div class="row text-center align-items-center flex-row-reverse">
 							<div class="col-lg-auto ms-lg-auto">
 								<ul class="list-inline list-inline-dots mb-0">
-									<li class="list-inline-item"><a href="https://preview.tabler.io" target="_blank" class="link-secondary" rel="noopener">Tabler Demo</a></li>
-									<li class="list-inline-item"><a href="https://preview.tabler.io/docs/index.html" target="_blank" class="link-secondary" rel="noopener">Tabler Doc.</a></li>
+									<li class="list-inline-item"><a href="https://t.me/devsobirov" target="_blank" class="link-secondary" rel="noopener">Yordam</a></li>
 									<li class="list-inline-item">
 										<a href="https://sobirov.uz" target="_blank" class="link-secondary" rel="noopener">
 											Made with

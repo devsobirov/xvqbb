@@ -32,7 +32,7 @@
                         <tbody>
                         @foreach($paginated as $item)
                             <tr>
-                                <td>{{$item->task->id}}</td>
+                                <td>{{$item->task->id}} - <span class="badge bg-azure">{{$item->task->code}}</span></td>
                                 <td>
                                     <div class="flex-fill py-1">
                                         <div class="font-weight-medium">{{ $item->task->title }}</div>

@@ -19,7 +19,8 @@ class SaveTaskRequest extends FormRequest
             'department_id' => 'required|exists:departments,id',
             'starts_at' => 'required|date|after_or_equal:' . date('Y-m-d'),
             'expires_at' => 'required|date|after:' . $this->starts_at,
-            'note' => 'nullable|string'
+            'note' => 'nullable|string',
+            'code' => 'required|string|unique:tasks,code,'. $this->route()->parameter('task')?->id
         ];
     }
 }

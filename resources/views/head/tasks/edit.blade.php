@@ -40,10 +40,17 @@
                   <form class="card-body" action="{{route('head.tasks.save', ['task' => $task->id])}}" method="POST">
                     @csrf
                     <h3 class="card-title">Asosiy ma'lumotlar</h3>
-                    <div class="mb-3">
-                        <label for="title" class="form-label required">Topshiriq nomi</label>
-                        <input type="text" id="title" name="title" value="{{$task->title}}" class="form-control @error('title') is-invalid @enderror" placeholder="Topshiriq №1" required>
-                        @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <div class="row mb-3">
+                        <div class="col-md-8 col-sm-12">
+                            <label for="title" class="form-label required">Topshiriq nomi</label>
+                            <input type="text" id="title" name="title" value="{{$task->title}}" class="form-control @error('title') is-invalid @enderror" placeholder="Topshiriq №1" required>
+                            @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label for="title" class="form-label required">Unikal kod</label>
+                            <input type="text" id="code" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="XXXXXXX" value="{{$task->code}}" readonly required>
+                            @error('code')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6 col-sm-12">

@@ -12,6 +12,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TaskController extends Controller
 {
@@ -99,6 +100,7 @@ class TaskController extends Controller
                     Process::create(['task_id' => $task->id,
                         'department_id' => $task->department_id,
                         'branch_id' => $branchId,
+                        'code' => strtoupper(Str::random(6))
                     ]);
                 }
             }

@@ -13,6 +13,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('title');
+            $table->string('code')->unique();
             $table->text('note')->nullable();
             $table->timestamp('starts_at')->nullable()->index();
             $table->timestamp('expires_at')->nullable()->index();

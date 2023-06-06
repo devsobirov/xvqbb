@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::select('id', 'name', 'email', 'role', 'branch_id', 'department_id', 'created_at')
+        $users = User::select('id', 'name', 'email', 'role','telegram_chat_id', 'branch_id', 'department_id', 'created_at')
             ->with(['branch', 'department'])
             ->orderBy('id', 'desc')->paginate(20)->withQueryString();
 

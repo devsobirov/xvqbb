@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class DepartmentTableSeeder extends Seeder
 {
-    public static $departmentList = [
-        ['name' => 'Direktorat'],
-        ['name' => 'Kadrlar bo\'limi'],
-        ['name' => 'Buxgalter'],
+    public static array $departmentList = [
+        ['name' => 'Direktorat', 'prefix' => 'direktor'],
+        ['name' => 'Kadrlar bo\'limi', 'prefix' => 'kadr_b'],
+        ['name' => 'Buxgalteriya', 'prefix' => 'buxgalteriya'],
     ];
 
     public function run(): void

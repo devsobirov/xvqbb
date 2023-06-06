@@ -21,10 +21,17 @@
                   <form class="card-body" action="{{route('head.tasks.save')}}" method="POST">
                     @csrf
                     <h3 class="card-title">Asosiy ma'lumotlar</h3>
-                    <div class="mb-3">
-                        <label for="title" class="form-label required">Topshiriq nomi</label>
-                        <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" placeholder="Topshiriq №1" required>
-                        @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <div class="row mb-3">
+                        <div class="col-md-8 col-sm-12">
+                            <label for="title" class="form-label required">Topshiriq nomi</label>
+                            <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" placeholder="Topshiriq №1" required>
+                            @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <label for="title" class="form-label required">Unikal kod</label>
+                            <input type="text" id="code" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="XXXXXXX" value="{{strtoupper(\Illuminate\Support\Str::random(6))}}" readonly required>
+                            @error('code')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6 col-sm-12">
@@ -57,7 +64,13 @@
                             @enderror
                         </div>
                     </div>
-
+                    <div class="mb-3">
+                          <label class="form-label">Qo'shimcha izoh</label>
+                          <textarea class="form-control @error('note') is-invalid @enderror" name="note" data-bs-toggle="autosize" placeholder="Type something…">{{$task->note}}</textarea>
+                          @error('note')
+                          <div class="invalid-feedback">{{ $message }}</div>
+                          @enderror
+                    </div>
                     <div class="text-end">
                         <button class="btn btn-success">Saqlash</button>
                     </div>

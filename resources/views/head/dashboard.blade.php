@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('custom_styles')
+
+@endsection
+
 @section('content')
     <div class="page-body">
         <div class="container-xl">
@@ -9,11 +13,11 @@
                     Hush kelibsiz {{ auth()->user()->name ?? null }}
                 </div>
                 <div class="text-muted">
-                    Sizning filial: {{auth()->user()->branch?->name}}
+                    Sizning bo'lim: {{auth()->user()->department?->name}}
                 </div>
 
                 @if(!auth()->user()->telegram_chat_id)
-                    <a href="{{route('telegram.start')}}" class="btn btn-info">Subscribe to telegram</a>
+                    <a href="{{route('telegram.start')}}" target="_blank" class="btn btn-info">Subscribe to telegram</a>
                 @endif
             </div>
 
@@ -25,17 +29,17 @@
 
             <div class="row row-cards">
                 <div class="col-md-6 col-sm-12">
-                    <div class="card {{count($tasks) ? 'bg-transparent' : ''}}" style="max-height: 28rem; height: auto">
+                    <div class="card {{count($tasks) ? 'bg-transparent' : ''}} shadow" style="max-height: 28rem; height: auto">
                         <div class="card-header justify-content-between bg-white">
                             <div>Aktiv topshiriqlar ({{count($tasks)}})</div>
                         </div>
                         <div class="card-body card-body-scrollable card-body-scrollable-shadow px-0 px-2">
                             <div class="divide-y bg-transparent">
-                            @forelse($tasks as $item)
-                                <x-process-card :task="$item"></x-process-card>
-                            @empty
-                                <div class="px-3">Aktiv topshiriqlar mavjud emas</div>
-                            @endforelse
+                                @forelse($tasks as $item)
+                                    <x-task-card :task="$item"></x-task-card>
+                                @empty
+                                    <div class="px-3">{{auth()->user()->department?->name ?? "Bo'lim"}}ga tegishli aktiv topshiriqlar mavjud emas</div>
+                                @endforelse
                             </div>
                         </div>
                     </div>
@@ -44,6 +48,7 @@
                     <x-notifications></x-notifications>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection

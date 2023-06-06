@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
+            $table->string('code')->unique();
             $table->unsignedBigInteger('task_id');
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('department_id');

@@ -3,23 +3,9 @@
 @section('content')
     <div class="container-xl">
         <!-- Page title -->
-        <div class="page-header d-print-none">
-            <div class="row align-items-center">
-                <div class="col">
-                <!-- Page pre-title -->
-                <div class="page-pretitle">
-                    {{ config('app.name') }}
-                </div>
-                    <h2 class="page-title">
-                       Mening akkauntim
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="page-body">
-        <div class="container-xl">
 
+    <div class="page-body">
+        <div class="container-xl"><div class="row py-4">
             @if ($message = Session::get('success'))
             <div class="alert alert-success alert-dismissible">
                 <div class="d-flex">
@@ -37,6 +23,14 @@
             </div>
             @endif
 
+            <div class="col-md-6 col-sm-12">
+                <div class="row align-items-center mb-3">
+                    <div class="col">
+                        <h2 class="page-title">
+                            Mening akkauntim
+                        </h2>
+                    </div>
+                </div>
             <form action="{{ route('profile.update') }}" method="POST" class="card" autocomplete="off">
                 @csrf
                 @method('PUT')
@@ -94,7 +88,43 @@
                 </div>
 
             </form>
+            </div>
 
+            <div class="col-md-6 col-sm-12">
+            <div class="row align-items-center mb-3">
+                <div class="col">
+                    <h2 class="page-title">
+                        Obunalarni boshqarish
+                    </h2>
+                </div>
+            </div>
+
+                <x-subscription-card>
+                    @if(auth()->user()->telegram_chat_id)
+                        <h3 class="card-title">Sizda botga obuna mavjud</h3>
+                        <div class="mb-3">
+                            <label class="form-label required">Telegram chat id</label>
+                            <input type="text" class="form-control" readonly placeholder="xxxxxxxxx" value="{{ auth()->user()->telegram_chat_id ?? '-' }}">
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end gap-2">
+                            <a href="{{route('telegram.start')}}" class="btn btn-twitter me-2">
+                                <x-svg.telegram></x-svg.telegram>
+                                Qayta ulanish
+                            </a>
+                            <form action="{{route('telegram.unsubscribe')}}" method="POST">
+                                @csrf
+                                <button href="#" class="btn btn-pinterest w-100">
+                                    <x-svg.bell-minus></x-svg.bell-minus> Bekor qilish
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <x-subscription-action></x-subscription-action>
+                    @endif
+                </x-subscription-card>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 

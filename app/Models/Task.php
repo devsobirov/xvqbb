@@ -42,7 +42,8 @@ class Task extends Model
 
     public function getUploadDirName(): string
     {
-        return 'task_' . $this->id;
+        $base = $this->created_at?->format('m-Y') ?? date('m-Y');
+        return $base. DIRECTORY_SEPARATOR . $this->id.'_'.$this->code;
     }
 
     public function publish()
