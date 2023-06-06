@@ -28,7 +28,7 @@ class TelegramController extends Controller
             ]);
         }
 
-        return redirect(url('https://telegram.me/'. env('TELEGRAM_BOT_NAME').'?start='.$token->token);
+        return redirect('https://telegram.me/'. env('TELEGRAM_BOT_NAME').'?start='.$token->token);
     }
 
     public function getUpdates(Request $request)
