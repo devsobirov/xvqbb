@@ -10,6 +10,18 @@ use Storage;
 
 class FileController extends Controller
 {
+    public function open(File $file)
+    {
+        $this->middleware('role');
+        return Storage::response($file->path, $file->getReadableFileName());
+    }
+
+    public function download(File $file)
+    {
+        $this->middleware('role');
+        return Storage::download($file->path, $file->getReadableFileName());
+    }
+
     public function upload(Request $request)
     {
         $request->validate([
@@ -20,11 +32,11 @@ class FileController extends Controller
 
         /** @var UploadedFile $file */
         $file = $request->file[0];
-        $saveDir = 'files/' . $request->dir;
+        $saveDir = 'files'. DIRECTORY_SEPARATOR . $request->dir;
         if (!Storage::exists($saveDir)) {
             Storage::makeDirectory($saveDir);
         }
-        $path = $file->storeAs($saveDir, $this->getFileName($file));
+        $path = $file->storeAs($saveDir, $this->getFileName($file, $request->file_name));
 
         if ($path) {
             $stored = File::create([
@@ -32,7 +44,7 @@ class FileController extends Controller
                 'filable_type' => $request->filable_type,
                 'filable_id' => $request->filable_id,
                 'extension' => $file->getClientOriginalExtension(),
-                'size' => round(((int) $file->getSize()) / (1024 * 1024), 2),
+                'size' => round(((int) $file->getSize()) / 1024 , 2), // KB
                 'user_id' => auth()->id()
             ]);
 
@@ -59,9 +71,11 @@ class FileController extends Controller
         return response()->json(['success' => 'ok'], 204);
     }
 
-    protected function getFileName(UploadedFile $file)
+    protected function getFileName(UploadedFile $file, ?string $filename = null)
     {
         $ext = $file->getClientOriginalExtension();
-        return rand(111, 999) . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $ext;
+        $name = !empty($filename) ? $filename : Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+        $nextId = \DB::table('files')->max('id') + 1;
+        return $nextId . '_' . $name . '.' . $ext;
     }
 }

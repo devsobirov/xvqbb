@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\ProcessCompleted;
 use App\Events\TaskPublished;
 use App\Listeners\NotifyAssignedTask;
+use App\Listeners\NotifyCompletedProcess;
 use App\Listeners\PublishProcesses;
 use App\Models\Task;
 use App\Observers\TaskObserver;
@@ -26,6 +28,9 @@ class EventServiceProvider extends ServiceProvider
         TaskPublished::class => [
             PublishProcesses::class,
             NotifyAssignedTask::class
+        ],
+        ProcessCompleted::class => [
+            NotifyCompletedProcess::class,
         ]
     ];
 

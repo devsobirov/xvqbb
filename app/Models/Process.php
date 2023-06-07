@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\ProcessStatusHelper;
+use App\Traits\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Process extends Model
 {
-    use HasFactory;
+    use HasFactory, HasStatus;
 
     protected $guarded = [];
 
@@ -20,6 +21,8 @@ class Process extends Model
         'rejected_at' => 'datetime',
         'approved_at' => 'datetime',
     ];
+
+    protected static string $statusHelper = ProcessStatusHelper::class;
 
     public function task(): BelongsTo
     {
@@ -48,34 +51,6 @@ class Process extends Model
             return $this->save();
         }
         return false;
-    }
-
-    public function getStatusName(): string
-    {
-        return ProcessStatusHelper::getStatusName($this->status);
-    }
-
-    public function getStatusColor($status = null): string
-    {
-        return ProcessStatusHelper::getStatusColor($status ? $status : $this->status);
-    }
-
-    public function lastStatusChanged(): ?\Illuminate\Support\Carbon
-    {
-        $tmp = ProcessStatusHelper::getTimestampName($this->status);
-        if ($tmp) {
-            return $this->$tmp;
-        }
-        return null;
-    }
-
-    public function updatedAt($status = null): ?\Illuminate\Support\Carbon
-    {
-        $tmp = ProcessStatusHelper::getTimestampName($status ? $status : $this->status);
-        if ($tmp) {
-            return $this->$tmp;
-        }
-        return null;
     }
 
     public function getUploadDirName(): string

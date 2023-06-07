@@ -21,6 +21,8 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/', App\Http\Controllers\HomeController::class)->name('home');
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/file/open/{file?}', [FileController::class, 'open'])->name('file.open');
+    Route::get('/file/download/{file?}', [FileController::class, 'download'])->name('file.download');
     Route::post('/file/upload', [FileController::class, 'upload'])->name('file.upload');
     Route::delete('/file/delete/{file?}', [FileController::class, 'delete'])->name('file.delete');
     Route::delete('notifications/{id}', [\App\Http\Controllers\NotificationController::class, 'delete'])
@@ -59,6 +61,7 @@ Route::middleware(['auth', 'role'])->group(function () {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/task/{process}', 'show')->name('show');
+            Route::post('/task/complete/{process}', 'complete')->name('complete');
             Route::get('/get-files/{process}', 'getFiles')->name('getFiles');
             Route::delete('/delete-file/{process}/{file?}', 'deleteFile')->name('deleteFile');
         });

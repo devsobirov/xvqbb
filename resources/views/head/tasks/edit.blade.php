@@ -104,6 +104,7 @@
                         <input type="hidden" name="filable_type" value="{{$task::class}}">
                         <input type="hidden" name="filable_id" value="{{$task->id}}">
                         <input type="hidden" name="dir" value="{{$task->getUploadDirName()}}">
+                        <input type="hidden" name="file_name" value="{{$task->code}}">
 
                     <div class="dz-default dz-message"><button class="dz-button" type="button">Fayllarni tanlang yoki shu oynaga tashlang</button></div></form>
                   </div>
@@ -123,9 +124,10 @@
                         <tr :key="file.id">
                             <td x-text="file.path"></td>
                             <td x-text="file.extension" class="text-muted"></td>
-                            <td x-text="file.size + ' MB'" class="text-muted"></td>
+                            <td x-text="getFileSize(file.size)" class="text-muted"></td>
                             <td class="text-muted">
-                                <button class="btn btn-sm btn-danger" @click.prevent="removeFile(file.id)">O'chirish</button>
+                                <button class="btn btn-sm btn-danger mx-1" @click.prevent="removeFile(file.id)">O'chirish</button>
+                                <a :href="fileOpenUrl(file.id)" target="_blank" class="btn btn-sm btn-azure mx-1">Ko'rish</a>
                             </td>
                         </tr>
                       </template>
@@ -238,7 +240,7 @@
                     });
                 },
                 uploaded() {
-                    this.$store.messages.success.push('File uploaded!');
+                    this.$store.messages.success.push('Fayl yuklandi!');
                     this.getFiles();
                 },
                 async removeFile(id) {

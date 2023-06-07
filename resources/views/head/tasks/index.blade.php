@@ -30,29 +30,32 @@
                         <thead>
                             <tr>
                                 <th>№ - Kod</th>
-                                <th>Nomi</th>
+                                <th>Topshiriq / Ma'sul</th>
                                 <th>Muddat</th>
-                                <th>Ma'sul</th>
                                 <th>Xolati</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($paginated as $item)
+                        @forelse($paginated as $item)
                             <tr>
-                                <td>{{$item->id}} - <span class="badge bg-azure">{{$item->code}}</span></td>
+                                <td>
+                                    {{$item->id}} - <span class="badge bg-azure">{{$item->code}}</span>
+                                </td>
                                 <td>
                                     <div class="flex-fill py-1">
                                         <div class="font-weight-medium">{{ $item->title }}</div>
+                                        <div class="text-muted">
+                                            <p class="mb-1"><x-svg.briefcase></x-svg.briefcase> {{$item->department?->name}}</p>
+                                            <p class="mb-1"><x-svg.tie></x-svg.tie> {{$item->user?->name}}</p>
+                                        </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="mb-1"><b>Start: </b>{{$item->starts_at?->format('d-m-Y')}}</p>
-                                    <p class="mb-1"><b>Yakun: </b>{{$item->expires_at?->format('d-m-Y')}}</p>
-                                </td>
-                                <td>
-                                    <p class="mb-1"><b>Bo'lim: </b>{{$item->department?->name}}</p>
-                                    <p class="mb-1"><b>Xodim: </b>{{$item->user?->name}}</p>
+                                    <p class="mb-1 text-muted">
+                                        <x-svg.calendar></x-svg.calendar> {{$item->starts_at?->format('d.m.Y')}} - {{$item->expires_at?->format('d.m.Y')}}
+                                    </p>
+                                    <p class="mb-1 text-muted ps-3"><i>{{$item->expires_at?->diffForHumans()}}</i></p>
                                 </td>
                                 <td>
                                     {{$item->published_at ? 'Aktiv' : 'Tasdiqlanmagan'}}
@@ -66,7 +69,11 @@
                                     @endif
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Topshiriqlar topilmadi</td>
+                            </tr>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>

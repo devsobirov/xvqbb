@@ -10,7 +10,7 @@ class BranchController extends Controller
     public function index()
     {
         return view('admin.branches.index', [
-            'paginated' => Branch::select('id', 'name')->with('users:id,name,branch_id')->paginate(20)
+            'paginated' => Branch::select('id', 'name', 'prefix')->with('users:id,name,branch_id')->paginate(20)
         ]);
     }
 }

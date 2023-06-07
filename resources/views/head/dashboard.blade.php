@@ -15,10 +15,6 @@
                 <div class="text-muted">
                     Sizning bo'lim: {{auth()->user()->department?->name}}
                 </div>
-
-                @if(!auth()->user()->telegram_chat_id)
-                    <a href="{{route('telegram.start')}}" target="_blank" class="btn btn-info">Subscribe to telegram</a>
-                @endif
             </div>
 
             @if(!auth()->user()->telegram_chat_id)
@@ -27,7 +23,7 @@
                 </x-subscription-card>
             @endif
 
-            <div class="row row-cards">
+            <div class="row row-cards mt-3">
                 <div class="col-md-6 col-sm-12">
                     <div class="card {{count($tasks) ? 'bg-transparent' : ''}} shadow" style="max-height: 28rem; height: auto">
                         <div class="card-header justify-content-between bg-white">

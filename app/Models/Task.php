@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Helpers\StatusHelperContract;
+use App\Helpers\TaskStatusHelper;
+use App\Traits\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, HasStatus;
 
     protected $guarded = [];
 
@@ -19,6 +22,8 @@ class Task extends Model
         'expires_at' => 'datetime',
         'published_at' => 'datetime' // null = draft
     ];
+
+    protected static string $statusHelper = TaskStatusHelper::class;
 
     public function department(): BelongsTo
     {

@@ -46,7 +46,7 @@ class TaskPublished extends Notification implements ShouldQueue
 
     protected function getMessage($notifiable): string
     {
-        return $notifiable->workplace()?->name . " uchun" .
+        return $notifiable->workplace()?->name . " uchun " .
             $this->task->department->name . " bo'limidan " .
             " yangi topshiriq qabul qilindi: '" . $this->task->title . "'";
     }

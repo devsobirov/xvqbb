@@ -30,7 +30,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($paginated as $item)
+                        @forelse($paginated as $item)
                             <tr>
                                 <td>{{$item->task->id}} - <span class="badge bg-azure">{{$item->task->code}}</span></td>
                                 <td>
@@ -72,7 +72,11 @@
                                     @endif
                                 </td>
                             </tr>
-                        @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Topshiriqlar topilmadi</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

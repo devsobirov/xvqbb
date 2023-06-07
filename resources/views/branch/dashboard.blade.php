@@ -11,10 +11,6 @@
                 <div class="text-muted">
                     Sizning filial: {{auth()->user()->branch?->name}}
                 </div>
-
-                @if(!auth()->user()->telegram_chat_id)
-                    <a href="{{route('telegram.start')}}" class="btn btn-info">Subscribe to telegram</a>
-                @endif
             </div>
 
             @if(!auth()->user()->telegram_chat_id)
@@ -23,9 +19,9 @@
                 </x-subscription-card>
             @endif
 
-            <div class="row row-cards">
+            <div class="row row-cards mt-3">
                 <div class="col-md-6 col-sm-12">
-                    <div class="card {{count($tasks) ? 'bg-transparent' : ''}}" style="max-height: 28rem; height: auto">
+                    <div class="card shadow {{count($tasks) ? 'bg-transparent' : ''}}" style="max-height: 28rem; height: auto">
                         <div class="card-header justify-content-between bg-white">
                             <div>Aktiv topshiriqlar ({{count($tasks)}})</div>
                         </div>

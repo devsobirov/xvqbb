@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Branch;
 
+use App\Events\ProcessCompleted;
 use App\Helpers\ProcessStatusHelper;
 use App\Http\Controllers\Controller;
 use App\Models\File;
@@ -31,6 +32,20 @@ class ProcessController extends Controller
         $task = $process->task;
         $files = $task->files;
         return view('branch.tasks.show', compact('process', 'task', 'files'));
+    }
+
+    public function complete(Process $process)
+    {
+        if (!count($process->files) || !$process->editable()) {
+            return redirect()->back()->with('msg', 'Topshiriqni joriy holatda yakulash mumkin emas!');
+        }
+
+        $process->completed_at = now();
+        $process->status = ProcessStatusHelper::COMPLETED;
+        $process->save();
+
+        ProcessCompleted::dispatch($process, auth()->user());
+        return redirect()->back()->with('success', 'Muvaffaqiyatli bajarildi');
     }
 
     public function deleteFile(Process $process, File $file)

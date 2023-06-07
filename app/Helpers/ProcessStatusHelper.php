@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 
-class ProcessStatusHelper
+class ProcessStatusHelper implements StatusHelperContract
 {
     const PENDING = 0;
     const PUBLISHED = 1;
@@ -30,6 +30,11 @@ class ProcessStatusHelper
         self::APPROVED => 'approved_at'
     ];
 
+    public static function init(): StatusHelperContract
+    {
+        return app(self::class);
+    }
+
     public static function getStatusName(?int $status): string
     {
         if (self::statusExists($status)) {
@@ -41,10 +46,13 @@ class ProcessStatusHelper
 
     public static function getTimestampName(?int $status): ?string
     {
-        if (self::statusExists($status) && !empty(self::TIMESTAMPS[$status])) {
-            return self::TIMESTAMPS[$status];
-        }
-        return null;
+        return match($status) {
+            self::PROCESSED => 'processed_at',
+            self::COMPLETED => 'completed_at',
+            self::REJECTED => 'rejected_at',
+            self::APPROVED => 'approved_at',
+            default => null
+        };
     }
 
     public static function statusExists(?int $status): bool
@@ -61,5 +69,15 @@ class ProcessStatusHelper
           self::APPROVED => 'success',
           default => 'secondary'
         };
+    }
+
+    public static function published($status): bool
+    {
+        return $status == self::PUBLISHED;
+    }
+
+    public static function editable(?int $status): bool
+    {
+        return in_array($status, [self::PUBLISHED, self::PROCESSED, self::REJECTED]);
     }
 }
