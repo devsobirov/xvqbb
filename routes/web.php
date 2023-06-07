@@ -50,6 +50,9 @@ Route::middleware(['auth', 'role'])->group(function () {
 
         Route::controller(ProcessController::class)->prefix('processes')->name('process.')->group(function () {
             Route::get('/task/{task}', 'task')->name('task');
+            Route::get('/process/{process}', 'process')->name('process');
+            Route::post('/process/approve/{process}', 'approve')->name('approve');
+            Route::post('/process/reject/{process}', 'reject')->name('reject');
         });
         //Route::post('/processes/handle/{task}', ProcessController::class)->name('task-processes');
     });

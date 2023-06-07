@@ -15,7 +15,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, HasRole, Notifiable, HasDatabaseNotifications;
 
-    protected $fillable = ['name', 'email', 'password', 'branch_id', 'department_id', 'role', 'is_active'];
+    protected $fillable = ['name', 'email', 'password', 'branch_id', 'department_id', 'role', 'is_active', 'telegram_chat_id'];
 
     protected $hidden = ['password', 'remember_token'];
 

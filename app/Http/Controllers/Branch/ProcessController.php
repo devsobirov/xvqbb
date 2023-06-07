@@ -42,6 +42,7 @@ class ProcessController extends Controller
 
         $process->completed_at = now();
         $process->status = ProcessStatusHelper::COMPLETED;
+        $process->attempts++;
         $process->save();
 
         ProcessCompleted::dispatch($process, auth()->user());

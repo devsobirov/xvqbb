@@ -35,6 +35,13 @@ class ProcessStatusHelper implements StatusHelperContract
         return app(self::class);
     }
 
+    public static function getVisibleStatuses(): array
+    {
+        $statuses = self::STATUSES;
+        unset($statuses[self::PENDING]);
+        return $statuses;
+    }
+
     public static function getStatusName(?int $status): string
     {
         if (self::statusExists($status)) {

@@ -2,10 +2,16 @@
 
 namespace App\Providers;
 
+use App\Events\ProcessApproved;
 use App\Events\ProcessCompleted;
+use App\Events\ProcessRejected;
 use App\Events\TaskPublished;
+use App\Listeners\HandleApprovedProcess;
+use App\Listeners\HandleRejectedProcess;
+use App\Listeners\NotifyApprovedProcess;
 use App\Listeners\NotifyAssignedTask;
 use App\Listeners\NotifyCompletedProcess;
+use App\Listeners\NotifyRejectedProcess;
 use App\Listeners\PublishProcesses;
 use App\Models\Task;
 use App\Observers\TaskObserver;
@@ -31,7 +37,15 @@ class EventServiceProvider extends ServiceProvider
         ],
         ProcessCompleted::class => [
             NotifyCompletedProcess::class,
-        ]
+        ],
+        ProcessApproved::class => [
+            HandleApprovedProcess::class,
+            NotifyApprovedProcess::class
+        ],
+        ProcessRejected::class => [
+            HandleRejectedProcess::class,
+            NotifyRejectedProcess::class
+        ],
     ];
 
     /**
