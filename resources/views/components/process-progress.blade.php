@@ -11,7 +11,7 @@
                         <div class="text-muted">{{$process->updatedAt($id)?->format('d-M-Y H:i')}}</div>
                         <div class="text-danger">{{$process->reject_msg}}</div>
                     </li>
-                @else
+                @elseif($id != \App\Helpers\ProcessStatusHelper::REJECTED)
                     <li class="step-item {{$process->status == $id ? 'active' : ''}}">
                         <div class="h4 m-0">{{$status}}</div>
                         <div class="text-muted">{{$process->updatedAt($id)?->format('d-M-Y H:i')}}</div>

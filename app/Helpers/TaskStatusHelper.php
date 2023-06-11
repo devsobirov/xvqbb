@@ -6,18 +6,18 @@ namespace App\Helpers;
 
 class TaskStatusHelper implements StatusHelperContract
 {
-    const STATUS_PENDING = 1;
-    const STATUS_ACTIVE = 2;
-    const STATUS_EXPIRED = 3;
-    const STATUS_CLOSED = 4;
-    const STATUS_ARCHIVED = 5;
+    const STATUS_PENDING = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_EXPIRED = 2;
+    const STATUS_CLOSED = 3;
+    const STATUS_ARCHIVED = 4;
 
     const STATUSES = [
         self::STATUS_PENDING => 'Tasdiqlanmagan',
         self::STATUS_ACTIVE => 'Aktiv',
-        self::STATUS_EXPIRED => 'Eskirgan',
-        self::STATUS_CLOSED => 'Tugatilgan',
-        self::STATUS_ARCHIVED => 'Arxivga olingan',
+        self::STATUS_EXPIRED => 'Muddatidan o\'tgan',
+        self::STATUS_CLOSED => 'Yakunlangan',
+        self::STATUS_ARCHIVED => 'Arxiv',
     ];
 
     public static function init(): StatusHelperContract
@@ -37,8 +37,10 @@ class TaskStatusHelper implements StatusHelperContract
     public static function getTimestampName(?int $status): ?string
     {
         return match ($status) {
+            self::STATUS_PENDING => 'created_at',
             self::STATUS_ACTIVE => 'published_at',
             self::STATUS_EXPIRED => 'expires_at',
+            self::STATUS_CLOSED => 'finished_at',
             default => null
         };
     }

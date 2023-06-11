@@ -24,6 +24,13 @@ return new class extends Migration
 
             $table->string('reject_msg')->nullable();
             $table->integer('attempts')->nullable()->default(0);
+
+            // How much score (points) was earned
+            $table->float('score')->nullable()->default(null);
+            // Completed in which position
+            $table->integer('position')->nullable();
+            // Is managed before task expired (true) or [expired or not managed]
+            $table->boolean('accomplished')->nullable()->default(false);
         });
     }
 

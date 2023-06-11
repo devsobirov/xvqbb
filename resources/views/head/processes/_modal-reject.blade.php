@@ -11,7 +11,7 @@
                 <div class="text-muted mb-1">Ijro "Jarayonda" statusiga o'tkaziladi va to'ldirish uchun ijrochiga qaytariladi. Iltimos, bekor qilish sababini va tavsiyalarni ko'rsating</div>
 
                 <div>
-                    <textarea class="form-control @error('reject_msg') is-invalid @enderror" data-bs-toggle="autosize" rows="3" required name="reject_msg"></textarea>
+                    <textarea class="form-control @error('reject_msg') is-invalid @enderror" data-bs-toggle="autosize" rows="3" required name="reject_msg" placeholder="{{$process->reject_msg}}"></textarea>
                 </div>
             </div>
             <div class="modal-footer">

@@ -22,7 +22,6 @@ class ProcessApproved extends Notification implements ShouldQueue
         return $notifiable->telegram_chat_id ? ['database', 'telegram'] : ['database'];
     }
 
-
     public function toTelegram($notifiable)
     {
         return TelegramMessage::create()
@@ -44,6 +43,6 @@ class ProcessApproved extends Notification implements ShouldQueue
 
     protected function getMessage(): string
     {
-        return 'Sizning filial uchun №' .$this->process->code ." raqmli topshiriq ijrosi qilindi \r\n";
+        return 'Sizning filial uchun №' .$this->process->code ." raqmli topshiriq ijrosi qabul qilindi \r\n";
     }
 }

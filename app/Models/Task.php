@@ -20,10 +20,13 @@ class Task extends Model
     protected $casts = [
         'starts_at' => 'datetime',
         'expires_at' => 'datetime',
-        'published_at' => 'datetime' // null = draft
+        'published_at' => 'datetime', // null = draft
+        'finished_at' => 'datetime' // null = draft
     ];
 
     protected static string $statusHelper = TaskStatusHelper::class;
+
+    const CLOSE_AFTER_DAYS_SINCE_EXPIRED = 3;
 
     public function department(): BelongsTo
     {
@@ -55,6 +58,7 @@ class Task extends Model
     {
         if (!$this->published()) {
             $this->published_at = now();
+            $this->status = TaskStatusHelper::STATUS_ACTIVE;
             $this->save();
         }
     }
@@ -62,5 +66,10 @@ class Task extends Model
     public function published(): bool
     {
         return !!$this->published_at;
+    }
+
+    public function expired(): bool
+    {
+        return $this->status == TaskStatusHelper::STATUS_EXPIRED || $this->expires_at?->gte(now());
     }
 }

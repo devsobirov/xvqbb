@@ -5,7 +5,11 @@ $filesCount = $task->files->count();
 @endphp
 @section('content')
     <div class="container-xl">
-        <div class="page-header"></div>
+        <div class="page-header">
+            <h2 class="page-title">
+                <span class="badge bg-azure mx-1">{{$task->code}}</span> - {{$task->title}}
+            </h2>
+        </div>
         <div class="page-body">
             <div class="row mb-4">
                 <div class="col-md-6 col-sm-12">
@@ -35,7 +39,9 @@ $filesCount = $task->files->count();
                             <tbody>
                             @foreach($processes as $process)
                                 <tr>
-                                    <td><span class="text-muted">{{$process->id}}</span></td>
+                                    <td>
+                                        <span class="text-muted">№{{$process->id}}</span> - <span class="badge bg-azure">{{$process->code}}</span>
+                                    </td>
                                     <td><a href="#" class="text-reset" tabindex="-1">{{$process->branch?->name}}</a></td>
                                     <td class="text-nowrap">
                                         <a href="#" class="text-muted">

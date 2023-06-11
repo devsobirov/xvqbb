@@ -5,13 +5,23 @@ namespace App\Providers;
 use App\Events\ProcessApproved;
 use App\Events\ProcessCompleted;
 use App\Events\ProcessRejected;
+use App\Events\ProcessTerminated;
+use App\Events\TaskClosed;
+use App\Events\TaskExpired;
 use App\Events\TaskPublished;
+use App\Listeners\CheckIsTaskFinished;
 use App\Listeners\HandleApprovedProcess;
+use App\Listeners\HandleClosedTask;
+use App\Listeners\HandleExpiredTask;
 use App\Listeners\HandleRejectedProcess;
+use App\Listeners\HandleTerminatedProcess;
 use App\Listeners\NotifyApprovedProcess;
 use App\Listeners\NotifyAssignedTask;
+use App\Listeners\NotifyClosedTask;
 use App\Listeners\NotifyCompletedProcess;
+use App\Listeners\NotifyExpiredTask;
 use App\Listeners\NotifyRejectedProcess;
+use App\Listeners\NotifyTerminatedProcess;
 use App\Listeners\PublishProcesses;
 use App\Models\Task;
 use App\Observers\TaskObserver;
@@ -35,16 +45,29 @@ class EventServiceProvider extends ServiceProvider
             PublishProcesses::class,
             NotifyAssignedTask::class
         ],
+        TaskExpired::class => [
+            HandleExpiredTask::class,
+            NotifyExpiredTask::class
+        ],
+        TaskClosed::class => [
+            HandleClosedTask::class,
+            NotifyClosedTask::class
+        ],
         ProcessCompleted::class => [
             NotifyCompletedProcess::class,
         ],
         ProcessApproved::class => [
             HandleApprovedProcess::class,
-            NotifyApprovedProcess::class
+            NotifyApprovedProcess::class,
+            CheckIsTaskFinished::class
         ],
         ProcessRejected::class => [
             HandleRejectedProcess::class,
             NotifyRejectedProcess::class
+        ],
+        ProcessTerminated::class => [
+            HandleTerminatedProcess::class,
+            NotifyTerminatedProcess::class
         ],
     ];
 

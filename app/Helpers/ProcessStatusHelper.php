@@ -7,17 +7,19 @@ class ProcessStatusHelper implements StatusHelperContract
 {
     const PENDING = 0;
     const PUBLISHED = 1;
-    const PROCESSED = 2;
-    const COMPLETED = 3;
+    const UN_EXECUTED = 2;
+    const PROCESSED = 3;
     const REJECTED = 4;
-    const APPROVED = 5;
+    const COMPLETED = 5;
+    const APPROVED = 6;
 
     const STATUSES = [
         self::PENDING => 'Tasdiqlanmagan',
         self::PUBLISHED => 'Tanishilmagan',
-        self::PROCESSED => 'Jarayonda',
+        self::UN_EXECUTED => 'Bajarilmagan',
+        self::PROCESSED => 'Bajarilmoqda',
+        self::REJECTED => 'Qayta nazoratga olingan',
         self::COMPLETED => 'Bajarilgan',
-        self::REJECTED => 'Bekor qilingan',
         self::APPROVED => 'Qabul qilingan'
     ];
 
@@ -39,6 +41,7 @@ class ProcessStatusHelper implements StatusHelperContract
     {
         $statuses = self::STATUSES;
         unset($statuses[self::PENDING]);
+        unset($statuses[self::UN_EXECUTED]);
         return $statuses;
     }
 
@@ -72,7 +75,7 @@ class ProcessStatusHelper implements StatusHelperContract
         return match ($status) {
           self::PROCESSED => 'yellow',
           self::COMPLETED => 'primary',
-          self::REJECTED => 'danger',
+          self::REJECTED , self::UN_EXECUTED => 'danger',
           self::APPROVED => 'success',
           default => 'secondary'
         };

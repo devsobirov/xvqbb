@@ -1,4 +1,4 @@
-@props(['processes])
+@props(['processes'])
 @php
         $processesCount = $processes->count();
         $published = $processes->where('status', \App\Helpers\ProcessStatusHelper::PUBLISHED)->count();
@@ -9,7 +9,9 @@
 @endphp
 <div class="card">
     <div class="card-body">
-        <p class="mb-3">Jami <strong>{{$processesCount}} </strong> filialga jo'natilgan</p>
+        <div class="d-flex align-items-center justify-content-between">
+            <p class="mb-3">Jami <strong>{{$processesCount}} </strong> filialga jo'natilgan</p>
+        </div>
         <div class="progress progress-separated mb-3">
             <div class="progress-bar bg-success" role="progressbar" style="width: {{round($approved/$processesCount*100)}}%" aria-label="Qabul qilingan"></div>
             <div class="progress-bar bg-primary" role="progressbar" style="width: {{round($completed/$processesCount*100)}}%" aria-label="Bajarilgan"></div>

@@ -15,9 +15,11 @@ return new class extends Migration
             $table->string('title');
             $table->string('code')->unique();
             $table->text('note')->nullable();
+            $table->integer('status')->nullable()->default(\App\Helpers\TaskStatusHelper::STATUS_PENDING);
             $table->timestamp('starts_at')->nullable()->index();
             $table->timestamp('expires_at')->nullable()->index();
             $table->timestamp('published_at')->nullable();
+            $table->timestamp('finished_at')->nullable();
 
             $table->unsignedBigInteger('department_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

@@ -13,7 +13,7 @@ class NewCompletedProcess extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public  Process $process, public string $username)
+    public function __construct(public Process $process, public string $username)
     {
         //
     }
@@ -36,6 +36,7 @@ class NewCompletedProcess extends Notification implements ShouldQueue
             ->content("Salom aleykum " . $notifiable->name . ", ko'rik uchun yangi topshiriq ijrosi qabul qilindi: \r\n")
             ->line("*Topshiriq: *" . $this->process->task?->title . " (".$this->process->task->code.")")
             ->line("*Filial: *" . $this->process->branch?->name)
+            ->line("*Urinish №: *" . $this->process->attempts)
             ->line("*Ma'sul: *" . $this->username)
             ->line("*Vaqt: *" . $this->process?->completed_at->format('d-m-Y H:i'))
             ->button('Batafsil', route('head.process.task', $this->process->task_id));

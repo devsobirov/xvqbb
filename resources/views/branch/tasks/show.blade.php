@@ -28,10 +28,23 @@
                             </div>
                             <div class="card-body">
                                 @csrf
-                                <h3 class="card-title">Topshiriq ijrosi ko'rik uchun topshrilgan</h3>
-                                <p>
-
+                                <h3 class="card-title">Topshiriq ijrosi qayta to'ldirish uchun bekor qilingan</h3>
+                                <p class="mb-2">
+                                    <x-svg.calendar></x-svg.calendar> {{$process->rejected_at->format('d-M-Y H:i')}}
                                 </p>
+                                <p class="mb-2">
+                                    <strong>Izoh:</strong> {!! $process->reject_msg !!}
+                                </p>
+                                <p class="fw-medium">
+                                    Kerakli o'zgartirish va to'ldirishlar kiritilgandan so'ng topshiriq ijrosini yakunlang va ko'rik uchun qayta topshiring
+                                </p>
+                                <form class="text-end" method="POST" action="{{route('branch.tasks.complete', $process->id)}}">
+                                    <input type="hidden" name="rejected">
+                                    @csrf
+                                    <button class="btn btn-danger" onclick="return confirm('Topshiriqni yakunlashni tasdiqlang')">
+                                        <x-svg.checkbox></x-svg.checkbox> Topshiriqni qayta topshirish
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -113,7 +126,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <x-process-progress></x-process-progress>
+                    <x-process-progress :process="$process"></x-process-progress>
                 </div>
             </div>
             <div class="row row-cards">
