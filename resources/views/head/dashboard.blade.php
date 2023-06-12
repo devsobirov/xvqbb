@@ -26,7 +26,7 @@
             <div class="row row-cards mt-3">
                 <div class="col-md-6 col-sm-12">
                     <div class="card {{count($tasks) ? 'bg-transparent' : ''}} shadow" style="max-height: 28rem; height: auto">
-                        <div class="card-header justify-content-between bg-white">
+                        <div class="card-header justify-content-between">
                             <div>Aktiv topshiriqlar ({{count($tasks)}})</div>
                         </div>
                         <div class="card-body card-body-scrollable card-body-scrollable-shadow px-0 px-2">
