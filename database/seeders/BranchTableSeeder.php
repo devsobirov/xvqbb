@@ -10,48 +10,56 @@ class BranchTableSeeder extends Seeder
 {
     public static array $branches = [
         [
-            'name' => "Bog'ot tumani",
-            'prefix' => 'bogot'
-        ],
-        [
-            'name' => "Gurlan tumani",
-            'prefix' => 'gurlan'
-        ],
-        [
-            'name' => "Qo'shko'pir tumani",
-            'prefix' => 'kushkupir'
-        ],
-        [
-            'name' => "Shovot tumani",
-            'prefix' => 'shovot'
-        ],
-        [
-            'name' => "Urganch shahri",
+            'name' => "Urganch shahar",
             'prefix' => 'urganch_sh'
         ],
         [
-            'name' => "Urganch tumani",
+            'name' => "Urganch tuman",
             'prefix' => 'urganch_t'
         ],
         [
-            'name' => "Xazorasp tumani",
-            'prefix' => 'xazorasp'
+            'name' => "Bog'ot tuman",
+            'prefix' => 'bogot'
         ],
         [
-            'name' => "Xiva tumani",
-            'prefix' => 'xiva'
+            'name' => "Gurlan tuman",
+            'prefix' => 'gurlan'
         ],
         [
-            'name' => "Xonqa tumani",
+            'name' => "Qo'shko'pir tuman",
+            'prefix' => 'kushkupir'
+        ],
+        [
+            'name' => "Xazarasp tuman",
+            'prefix' => 'xazarasp'
+        ],
+        [
+            'name' => "Xiva shahar",
+            'prefix' => 'xiva_sh'
+        ],
+        [
+            'name' => "Xiva tuman",
+            'prefix' => 'xiva_t'
+        ],
+        [
+            'name' => "Xonqa tuman",
             'prefix' => 'xonqa'
         ],
         [
-            'name' => "Yangiariq tumani",
+            'name' => "Shovot tuman",
+            'prefix' => 'shovot'
+        ],
+        [
+            'name' => "Yangiariq tuman",
             'prefix' => 'yangiariq'
         ],
         [
-            'name' => "Yangibozor tumani",
+            'name' => "Yangibozor tuman",
             'prefix' => 'yangibozor'
+        ],
+        [
+            'name' => "Tuproqqal’a tuman",
+            'prefix' => 'tuoroqqala'
         ],
     ];
 
