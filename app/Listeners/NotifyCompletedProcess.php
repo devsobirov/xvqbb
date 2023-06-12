@@ -45,7 +45,7 @@ class NotifyCompletedProcess
         }
 
         if (count($executors)) {
-            Notification::send($executors, new YourProcessCompleted($process));
+            Notification::send($executors, new YourProcessCompleted($process, $username));
         }
     }
 }

@@ -12,7 +12,7 @@ class YourProcessCompleted extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Process $process)
+    public function __construct(public Process $process, public string $username)
     {
         //
     }
