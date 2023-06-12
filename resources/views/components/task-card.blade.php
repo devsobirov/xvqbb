@@ -5,8 +5,8 @@
 @php
     $percent = $item->approved ? round($item->approved * 100 / $item->processes, 2) : 0;
     $published = !!$item->published_at;
-    $class = $published ? 'success' : 'secondary';
-    $status = $item->published_at ? 'Aktiv' : 'Tasdiqlanmagan';
+    $class = $item->getStatusColor();
+    $status = $item->getStatusName();
 @endphp
 <div class="card mb-3 pb-0">
     <div class="ribbon bg-red">{{ $percent }} % - {{$item->approved}} / {{$item->processes}}</div>

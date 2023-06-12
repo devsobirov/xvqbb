@@ -16,6 +16,9 @@ class HandleProcessResults
     public ?int $totalApprovedProcesses = null;
     protected ?bool $accomplished = null;
     protected ?int $position = null;
+    public $baseScore;
+    public $bonus;
+    public $penalty;
 
     public function __construct(Process $process)
     {
@@ -47,15 +50,18 @@ class HandleProcessResults
         $penaltyScore = 0;
 
         if ($this->isAccomplished()) {
-            $bonusScore = round($maxScore * 1.3, 1);
-
+            $bonusScore = round($maxScore * 0.3, 1);
         }
 
         if (in_array($this->process->status, [ProcessStatusHelper::UN_EXECUTED, ProcessStatusHelper::PUBLISHED])) {
             $penaltyScore = round($maxScore * 0.3, 1) * -1;
-        } elseif ($this->process->attempts > 1) {
-            $penaltyScore = $baseScore * 0.1 * ($this->process->attempts - 1);
+        } elseif ($attempts = ($this->process->attempts - 1)) {
+            $penaltyScore = $baseScore * -0.1 * $attempts;
         }
+
+        $this->bonus = $bonusScore;
+        $this->penalty = $penaltyScore;
+        $this->baseScore = $baseScore;
 
         return $baseScore + $bonusScore + $penaltyScore;
     }
@@ -63,10 +69,13 @@ class HandleProcessResults
     public function getPosition(): ?int
     {
         if (!is_numeric($this->position)) {
-            $finished = $this->getTotalApprovedProcesses();
+            $currentPosition = DB::table('processes')
+                ->where('task_id', $this->process->task_id)
+                ->min('position');
+
             $this->position = $this->process->status == ProcessStatusHelper::APPROVED
-                ? $finished + 1
-                : $this->getTotalProcesses();
+                ? $currentPosition + 1
+                : null;
         }
 
         return $this->position;

@@ -20,7 +20,7 @@ class PublishProcesses
 
         if ($task->published() || count($task->processes)) {
             foreach ($task->processes as $proccess) {
-                /** @var App\Models\Process $process*/
+                /** @var \App\Models\Process $process*/
                 $proccess->publish();
             }
 

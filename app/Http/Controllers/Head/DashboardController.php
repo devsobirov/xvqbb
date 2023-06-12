@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Head;
 
 use App\Helpers\ProcessStatusHelper;
+use App\Helpers\TaskStatusHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -11,7 +12,8 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
-        $tasks = Task::select(['id', 'user_id', 'expires_at', 'published_at', 'title'])
+        $tasks = Task::select(['id', 'user_id', 'expires_at', 'published_at', 'title', 'status'])
+            ->whereNotIn('status', [TaskStatusHelper::STATUS_CLOSED, TaskStatusHelper::STATUS_ARCHIVED])
             ->where('department_id', auth()->user()->department_id)
             ->with('user:id,name')
             ->withCount('processes as processes')

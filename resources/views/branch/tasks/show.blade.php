@@ -127,6 +127,17 @@
                 </div>
                 <div class="col-lg-4">
                     <x-process-progress :process="$process"></x-process-progress>
+
+                    @if(in_array($process->status, [\App\Helpers\ProcessStatusHelper::UN_EXECUTED, \App\Helpers\ProcessStatusHelper::APPROVED]))
+                        <div class="card my-3">
+                            <div class="card-body">
+                                <h3 class="card-title">Natija: </h3>
+                                <p class="mb-1"><span class=" fw-medium"> Vaqt bo'yicha:</span> {{$process->accomplished ? 'Kechikmagan' : 'Qoniqarsiz'}}</p>
+                                <p class="mb-1"><span class=" fw-medium"> O'rin:</span> {{$process->position ? $process->position . ' - chi bo\'lib' : '-'}}</p>
+                                <p class="mb-1"><span class=" fw-medium"> Ball:</span> {{$process->score}}</p>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="row row-cards">

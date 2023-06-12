@@ -45,7 +45,7 @@
                 if (kb < 511) {
                     return kb + ' KB';
                 }
-                return (kb/1024).floor(2) + ' MB';
+                return (kb/1024).toFixed(2) + ' MB';
             },
             fileOpenUrl(id) {
                 return  "{{route('file.open')}}/"+id;

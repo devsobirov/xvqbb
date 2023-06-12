@@ -30,9 +30,11 @@
                         <thead>
                             <tr>
                                 <th>№ - Kod</th>
-                                <th>Topshiriq / Ma'sul</th>
+                                <th>Topshiriq</th>
+                                <th>Bo'lim / Ma'sul</th>
                                 <th>Muddat</th>
                                 <th>Xolati</th>
+                                <th>Progress</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -43,8 +45,12 @@
                                     {{$item->id}} - <span class="badge bg-azure">{{$item->code}}</span>
                                 </td>
                                 <td>
-                                    <div class="flex-fill py-1">
+                                    <div class="flex-fill py-1" style="max-width: 350px">
                                         <div class="font-weight-medium">{{ $item->title }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex-fill py-1" style="max-width: 350px">
                                         <div class="text-muted">
                                             <p class="mb-1"><x-svg.briefcase></x-svg.briefcase> {{$item->department?->name}}</p>
                                             <p class="mb-1"><x-svg.tie></x-svg.tie> {{$item->user?->name}}</p>
@@ -58,14 +64,21 @@
                                     <p class="mb-1 text-muted ps-3"><i>{{$item->expires_at?->diffForHumans()}}</i></p>
                                 </td>
                                 <td>
-                                    {{$item->published_at ? 'Aktiv' : 'Tasdiqlanmagan'}}
+                                    <span class="badge bg-{{$item->getStatusColor()}} badge-blink me-1"></span> {{$item->getStatusName()}}
+                                </td>
+                                <td>
+                                    @if($item->total)
+                                        {{round($item->completed *100 / $item->total, 2)}} %
+                                    @else
+                                        -
+                                    @endif
                                 </td>
                                 <td>
                                     @if ($item->department_id == auth()->user()->department_id && !$item->published_at)
-                                        <a href="{{route('head.tasks.edit', $item->id)}}">Davom ettirish</a>
+                                        <a class="btn btn-yellow" href="{{route('head.tasks.edit', $item->id)}}">Davom ettirish</a>
                                     @endif
                                     @if ($item->department_id == auth()->user()->department_id && $item->published_at)
-                                        <a href="{{route('head.process.task', $item->id)}}">Boshqarish</a>
+                                        <a class="btn btn-azure" href="{{route('head.process.task', $item->id)}}">Boshqarish</a>
                                     @endif
                                 </td>
                             </tr>

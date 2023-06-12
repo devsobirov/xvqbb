@@ -4,8 +4,11 @@
 $filesCount = $task->files->count();
 @endphp
 @section('content')
-    <div class="container-xl">
+    <div class="container-xl" x-data="taskData">
         <div class="page-header">
+            <div class="page-pretitle">
+                {{$task->department->name}}, {{$task->user?->name}}
+            </div>
             <h2 class="page-title">
                 <span class="badge bg-azure mx-1">{{$task->code}}</span> - {{$task->title}}
             </h2>
@@ -16,7 +19,33 @@ $filesCount = $task->files->count();
                     <x-task-progress :processes="$processes"></x-task-progress>
                 </div>
                 <div class="col-md-6 col-sm-12">
-
+                    <div class="card">
+                        <div class="card-table table-responsive">
+                            <table class="table table-vcenter">
+                                <thead>
+                                <tr>
+                                    <th>Fayl</th>
+                                    <th>Format</th>
+                                    <th>Hajm</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <template x-for="file in uploads" x-show="uploads && uploads.length" x-cloak>
+                                    <tr :key="file.id">
+                                        <td x-text="file.path"></td>
+                                        <td x-text="file.extension" class="text-muted"></td>
+                                        <td x-text="getFileSize(file.size)" class="text-muted"></td>
+                                        <td class="text-muted">
+                                            <a :href="fileOpenUrl(file.id)" target="_blank" class="btn btn-sm btn-azure mx-1">Ko'rish</a>
+                                    </tr>
+                                </template>
+                                <tr x-cloak x-show="!uploads || !uploads.length">
+                                    <td colspan="4" class="text-center">Yuklangan fayllar mavjud emas</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-12">
@@ -29,16 +58,21 @@ $filesCount = $task->files->count();
                             <thead>
                             <tr>
                                 <th class="w-1">No.</th>
+                                <th class="w-1">Code</th>
                                 <th>Filial</th>
                                 <th>Fayllar</th>
                                 <th>Status</th>
                                 <th>So'ngi amaliyot vaqti</th>
+                                <th>Natija</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($processes as $process)
                                 <tr>
+                                    <td>
+                                        <span class="text-muted">{{$process->position ?? '-'}}
+                                    </td>
                                     <td>
                                         <span class="text-muted">№{{$process->id}}</span> - <span class="badge bg-azure">{{$process->code}}</span>
                                     </td>
@@ -64,6 +98,16 @@ $filesCount = $task->files->count();
                                             -
                                         @endif
                                     </td>
+                                    <td>
+                                        @if($process->score)
+                                        <p class="mb-1">{{$process->score}} ball</p>
+                                        <span class="badge bg-{{$process->accomplished ? 'green' : 'danger'}}">
+                                            {{$process->accomplished ? "Kechikmagan" : 'Qoniqarsiz'}}
+                                        </span>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td class="text-end">
                                         <a href="{{route('head.process.process', $process->id)}}" class="btn btn-azure">
                                             <x-svg.file-search></x-svg.file-search> Boshqarish
@@ -78,4 +122,14 @@ $filesCount = $task->files->count();
             </div>
         </div>
     </div>
+@endsection
+
+@section('custom_scripts')
+    <script>
+        function taskData() {
+            return {
+                uploads: @json($task->files)
+            }
+        }
+    </script>
 @endsection

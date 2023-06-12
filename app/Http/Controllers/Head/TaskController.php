@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Head;
 
 use App\Events\TaskPublished;
+use App\Helpers\ProcessStatusHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Head\SaveTaskRequest;
 use App\Models\Branch;
 use App\Models\File;
 use App\Models\Process;
 use App\Models\Task;
+use App\Services\AssignBranchProcesses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +20,12 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $paginated = Task::with('department:id,name', 'user:id,name')->latest()->paginate();
+        $paginated = Task::with('department:id,name', 'user:id,name')
+            ->withCount('processes as total')
+            ->withCount(['processes as completed' => function ($query) {
+                $query->where('status', ProcessStatusHelper::APPROVED);
+            }])
+            ->latest()->paginate();
         return view('head.tasks.index', compact('paginated'));
     }
 
@@ -89,24 +96,7 @@ class TaskController extends Controller
             'branchIds.*' => ['nullable', 'numeric', 'exists:branches,id']
         ]);
 
-        $branchIds = $request->branchIds;
-        if (count($branchIds)) {
-            DB::table('processes')->where('task_id', $task->id)
-                ->whereNotIn('branch_id', $branchIds)
-                ->delete();
-
-            foreach ($branchIds as $branchId) {
-                if (!DB::table('processes')->where('task_id', $task->id)->where('branch_id', $branchId)->exists()) {
-                    Process::create(['task_id' => $task->id,
-                        'department_id' => $task->department_id,
-                        'branch_id' => $branchId,
-                        'code' => strtoupper(Str::random(6))
-                    ]);
-                }
-            }
-        } else {
-            DB::table('processes')->where('task_id', $task->id)->delete();
-        }
+        (new AssignBranchProcesses())->handle($task, $request->branchIds);
 
         if ($request->expectsJson()) {
             return response()->json([

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\StatusHelperContract;
 use App\Helpers\TaskStatusHelper;
 use App\Traits\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -70,6 +69,6 @@ class Task extends Model
 
     public function expired(): bool
     {
-        return $this->status == TaskStatusHelper::STATUS_EXPIRED || $this->expires_at?->gte(now());
+        return $this->status == TaskStatusHelper::STATUS_EXPIRED || $this->expires_at?->lte(now());
     }
 }

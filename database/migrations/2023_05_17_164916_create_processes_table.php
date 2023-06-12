@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('task_id');
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('department_id');
+            $table->timestamp('period')->index()->nullable();
             $table->integer('status')->nullable()->default(0);
             $table->timestamp('processed_at')->nullable();
             $table->timestamp('completed_at')->nullable();
