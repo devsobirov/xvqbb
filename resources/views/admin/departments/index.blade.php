@@ -14,7 +14,7 @@
                 <div class="col-auto ms-auto d-print-none">
                 <div class="d-flex">
                     {{-- <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search user…"> --}}
-                    <a href="#" @click.prevent="alert('Keyingi versiyalardan mavjud')" class="btn btn-primary">
+                    <a href="{{route('departments.create')}}" class="btn btn-primary">
                         <x-svg.plus></x-svg.plus> Yangi bo'lim
                     </a>
                 </div>
@@ -41,7 +41,8 @@
                                 <td>{{$item->id}}</td>
                                 <td>
                                     <div class="flex-fill py-1">
-                                        <div class="font-weight-medium">{{ $item->name }}</div>
+                                        <div class="font-weight-medium mb-1">{{ $item->name }}</div>
+                                        <div class="text-muted">Prefix: <span class="badge">{{ $item->prefix }}</span></div>
                                     </div>
                                 </td>
                                 <td>
@@ -52,7 +53,11 @@
                                     @endforelse
                                     <p></p>
                                 </td>
-                                <td></td>
+                                <td>
+                                    <a href="{{route('departments.edit', $item->id)}}" class="btn btn-icon btn-yellow">
+                                        <x-svg.pen></x-svg.pen>
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

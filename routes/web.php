@@ -31,7 +31,8 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::middleware('role:' . Role::ADMIN)->group(function () {
         Route::resource('users', UserController::class)->except([ 'show'])->names('users');
         Route::resource('branches', BranchController::class)->only('index')->names('branches');
-        Route::resource('departments', DepartmentController::class)->only('index')->names('departments');
+        Route::resource('departments', DepartmentController::class)->except('show', 'destroy')
+            ->names('departments');
     });
 
     Route::middleware('role:' . Role::HEAD_MANAGER)->prefix('head')->as('head.')->group(function () {
