@@ -29,7 +29,7 @@ Route::middleware(['auth', 'role'])->group(function () {
         ->name('notifications.delete');
 
     Route::middleware('role:' . Role::ADMIN)->group(function () {
-        Route::resource('users', UserController::class)->except(['destroy', 'show'])->names('users');
+        Route::resource('users', UserController::class)->except([ 'show'])->names('users');
         Route::resource('branches', BranchController::class)->only('index')->names('branches');
         Route::resource('departments', DepartmentController::class)->only('index')->names('departments');
     });

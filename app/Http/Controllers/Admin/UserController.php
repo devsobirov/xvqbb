@@ -14,7 +14,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::select('id', 'name', 'email', 'role','telegram_chat_id', 'branch_id', 'department_id', 'created_at')
+        $users = User::select(['id', 'name', 'email', 'role','telegram_chat_id', 'branch_id', 'department_id', 'created_at'])
+            ->search(request()->get('search'))->byRole(request()->get('role'))
             ->with(['branch', 'department'])
             ->orderBy('id', 'desc')->paginate(20)->withQueryString();
 
@@ -54,5 +55,22 @@ class UserController extends Controller
         Log::info("#" . auth()->id() . ' ' . auth()->user()->name . ' updated user #' . $user->id . ' ' . $user->name);
 
         return redirect()->back()->with('success', 'User successfully updated');
+    }
+
+    public function destroy(User $user)
+    {
+        if ($user->isAdmin()) {
+            return redirect()->back()
+                ->withErrors('msg', 'Admin maqomidagi foydalanuvchilarni o\'chirish mumkin emas');
+        }
+
+        Log::info(auth()->user()->name . ' deleting user '. $user->name, [
+            'admin' => auth()->user(),
+            'user' => $user
+        ]);
+
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Muvaffaqiyatli o\'chirildi');
     }
 }
