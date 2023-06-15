@@ -6,7 +6,9 @@
 
                     <li class="nav-item @if(request()->routeIs('head.home') || request()->routeIs('branch.home')) active @endif">
                         <a class="nav-link" href="{{ route('home') }}" >
-                            <x-svg.home></x-svg.home>
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <x-svg.home></x-svg.home>
+                            </span>
                             <span class="nav-link-title">
                                Bosh sahifa
                             </span>
@@ -16,9 +18,21 @@
                     @if(auth()->user()->isManager())
                     <li class="nav-item @if(request()->routeIs('head.tasks.*')) active @endif">
                         <a class="nav-link" href="{{ route('head.tasks.index') }}" >
-                            <x-svg.tasks></x-svg.tasks>
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <x-svg.tasks></x-svg.tasks>
+                            </span>
                             <span class="nav-link-title">
                                 Topshiriqlar
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if(request()->routeIs('head.stats.*')) active @endif">
+                        <a class="nav-link" href="{{ route('head.stats.index') }}" >
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <x-svg.stats></x-svg.stats>
+                            </span>
+                            <span class="nav-link-title">
+                                Statistika
                             </span>
                         </a>
                     </li>

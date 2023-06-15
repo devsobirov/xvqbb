@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Head\ProcessController;
 use App\Http\Controllers\Head\TaskController;
+use App\Http\Controllers\Head\StatsController;
 
 Route::controller(TelegramController::class)->prefix('telegram')->as('telegram.')->group(function () {
     Route::get('set-webhook', 'setWebhook')->name('setWebhook')->middleware('role:'. Role::ADMIN);
@@ -55,6 +56,11 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::post('/process/approve/{process}', 'approve')->name('approve');
             Route::post('/process/reject/{process}', 'reject')->name('reject');
         });
+
+        Route::controller(StatsController::class)->prefix('stats')->as('stats.')->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
+
         //Route::post('/processes/handle/{task}', ProcessController::class)->name('task-processes');
     });
 

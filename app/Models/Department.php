@@ -22,4 +22,14 @@ class Department extends Model
     {
         return $this->hasMany(User::class, 'department_id');
     }
+
+    public function processes(): HasMany
+    {
+        return $this->hasMany(Process::class, 'department_id');
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class, 'department_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\ProcessStatusHelper;
 use App\Traits\HasStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,6 +43,30 @@ class Process extends Model
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'filable');
+    }
+
+    public function scopeFinished(Builder $query)
+    {
+        //$query->whereIn('status', [ProcessStatusHelper::APPROVED, ProcessStatusHelper::UN_EXECUTED]);
+        $query->whereNotNull('score');
+    }
+
+    public function scopeByPeriod(Builder $query, ?string $from = null, ?string $to = null)
+    {
+        $query->when(!empty($from), function ($query) use ($from) {
+            $query->whereDate('period', '>=', $from);
+        });
+
+        $query->when(!empty($to), function ($query) use ($to) {
+            $query->whereDate('period', '<=', $to);
+        });
+    }
+
+    public function scopeByDepartment(Builder $query, $departmentId = null)
+    {
+        $query->when(!empty($departmentId), function ($query) use ($departmentId) {
+            $query->where('department_id',  $departmentId);
+        });
     }
 
     public function publish(): bool

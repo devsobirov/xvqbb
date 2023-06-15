@@ -18,6 +18,11 @@ class Branch extends Model
         return $this->hasMany(User::class, 'branch_id');
     }
 
+    public function processes(): HasMany
+    {
+        return $this->hasMany(Process::class, 'branch_id');
+    }
+
     public static function getForList(): Collection
     {
         return self::select('id', 'name')->get();
