@@ -23,7 +23,7 @@ class HandleClosedTask
 
         if (!in_array($task->status, [TaskStatusHelper::STATUS_CLOSED])) {
             $task->status = TaskStatusHelper::STATUS_CLOSED;
-            $task->finished_at = now();
+            $task->finished_at = $task->finished_at ?? now();
             $task->updated_at = now();
             $task->save();
         }

@@ -71,4 +71,12 @@ class Task extends Model
     {
         return $this->status == TaskStatusHelper::STATUS_EXPIRED || $this->expires_at?->lte(now());
     }
+
+    public function expiredComparingTo($completed_at = null): bool
+    {
+        if ($completed_at) {
+            return $this->expires_at?->lte($completed_at);
+        }
+        return false;
+    }
 }

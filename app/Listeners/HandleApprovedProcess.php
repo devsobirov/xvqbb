@@ -27,7 +27,7 @@ class HandleApprovedProcess
         $process = $event->process;
 
         $process->status =  ProcessStatusHelper::APPROVED;
-        $process->approved_at = now();
+        $process->approved_at = $process->approved_at ?? now();
         $process->reject_msg = null;
         $process->save();
 

@@ -45,14 +45,17 @@ class HandleProcessResults
     public function getScore(): float
     {
         $maxScore = $this->getTotalProcesses();
-        $baseScore = $maxScore - $this->getTotalApprovedProcesses();
-        $bonusScore = 0;
-        $penaltyScore = 0;
+        $baseScore = match ($this->process->status) {
+            ProcessStatusHelper::APPROVED, ProcessStatusHelper::COMPLETED => $maxScore - $this->getTotalApprovedProcesses(),
+            default => 0
+        };
 
+        $bonusScore = 0;
         if ($this->isAccomplished()) {
             $bonusScore = round($maxScore * 0.3, 1);
         }
 
+        $penaltyScore = 0;
         if (in_array($this->process->status, [ProcessStatusHelper::UN_EXECUTED, ProcessStatusHelper::PUBLISHED])) {
             $penaltyScore = round($maxScore * 0.3, 1) * -1;
         } elseif ($attempts = ($this->process->attempts - 1)) {
@@ -71,7 +74,7 @@ class HandleProcessResults
         if (!is_numeric($this->position)) {
             $currentPosition = DB::table('processes')
                 ->where('task_id', $this->process->task_id)
-                ->min('position');
+                ->max('position');
 
             $this->position = $this->process->status == ProcessStatusHelper::APPROVED
                 ? $currentPosition + 1
@@ -84,7 +87,7 @@ class HandleProcessResults
     public function isAccomplished(): bool
     {
         if (!is_bool($this->accomplished)) {
-            $this->accomplished = $this->process->status == ProcessStatusHelper::APPROVED && !$this->process->task->expired();
+            $this->accomplished = $this->process->status == ProcessStatusHelper::APPROVED && !$this->process->task->expiredComparingTo($this->process->completed_at);
         }
 
         return $this->accomplished;

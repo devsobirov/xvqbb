@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="col-md-6 col-sm-12">
                                     <label for="" class="form-label">Ma'sul Xodim</label>
-                                    <input type="text" class="form-control" value="{{$task->user->name}}" placeholder="FIO" readonly>
+                                    <input type="text" class="form-control" value="{{$task->user?->name}}" placeholder="FIO" readonly>
                                 </div>
                             </div>
 

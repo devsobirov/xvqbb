@@ -25,7 +25,8 @@ class AssignBranchProcesses
 
             foreach ($branchIds as $branchId) {
                 if (!DB::table('processes')->where('task_id', $task->id)->where('branch_id', $branchId)->exists()) {
-                    Process::create(['task_id' => $task->id,
+                    Process::create([
+                        'task_id' => $task->id,
                         'department_id' => $task->department_id,
                         'branch_id' => $branchId,
                         'code' => strtoupper(Str::random(6)),
