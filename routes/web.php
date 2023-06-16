@@ -48,6 +48,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::post('/processes/{task}', 'processes')->name('processes');
             Route::post('/publish/{task}', 'publish')->name('publish');
             Route::delete('/delete-file/{task}/{file?}', 'deleteFile')->name('deleteFile');
+            Route::delete('/destroy/{task}', 'destroy')->name('destroy');
         });
 
         Route::controller(ProcessController::class)->prefix('processes')->name('process.')->group(function () {

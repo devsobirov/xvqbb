@@ -6,11 +6,13 @@ use App\Events\ProcessApproved;
 use App\Events\ProcessCompleted;
 use App\Events\ProcessRejected;
 use App\Events\ProcessTerminated;
+use App\Events\TaskCancelled;
 use App\Events\TaskClosed;
 use App\Events\TaskExpired;
 use App\Events\TaskPublished;
 use App\Listeners\CheckIsTaskFinished;
 use App\Listeners\HandleApprovedProcess;
+use App\Listeners\HandleCancelledTask;
 use App\Listeners\HandleClosedTask;
 use App\Listeners\HandleExpiredTask;
 use App\Listeners\HandleRejectedProcess;
@@ -69,6 +71,9 @@ class EventServiceProvider extends ServiceProvider
             HandleTerminatedProcess::class,
             NotifyTerminatedProcess::class
         ],
+        TaskCancelled::class => [
+            HandleCancelledTask::class
+        ]
     ];
 
     /**

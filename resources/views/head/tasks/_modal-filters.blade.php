@@ -54,7 +54,7 @@
                             <select class="form-select" name="status">
                                 <option value="">Barcha statuslar</option>
                                 @foreach(\App\Helpers\TaskStatusHelper::STATUSES as $id => $name)
-                                    <option value="{{$id}}" @if($id == request('status')) selected @endif >{{$name}}</option>
+                                    <option value="{{$id}}" @if($id === request('status')) selected @endif >{{$name}}</option>
                                 @endforeach
                             </select>
                         </div>

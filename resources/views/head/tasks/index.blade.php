@@ -88,14 +88,24 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($item->department_id == auth()->user()->department_id && $item->pending())
-                                        <a class="btn btn-icon btn-yellow" href="{{route('head.tasks.edit', $item->id)}}">Davom ettirish</a>
-                                    @endif
-                                    @if ($item->finished())
-                                        <a class="btn btn-icon btn-azure" href="{{route('head.process.task', $item->id)}}"><x-svg.eye></x-svg.eye></a>
-                                    @elseif(!$item->pending())
-                                        <a class="btn btn-icon btn-success" href="{{route('head.process.task', $item->id)}}"><x-svg.pen></x-svg.pen></a>
-                                    @endif
+                                    <div class="d-flex gap-1">
+                                        @if ($item->department_id == auth()->user()->department_id && $item->pending())
+                                            <a class="btn btn-icon btn-yellow" href="{{route('head.tasks.edit', $item->id)}}"><x-svg.pen></x-svg.pen></a>
+                                        @endif
+                                        @if ($item->finished())
+                                            <a class="btn btn-icon btn-azure" href="{{route('head.process.task', $item->id)}}"><x-svg.eye></x-svg.eye></a>
+                                        @elseif(!$item->pending())
+                                            <a class="btn btn-icon btn-success" href="{{route('head.process.task', $item->id)}}"><x-svg.pen></x-svg.pen></a>
+                                        @endif
+                                        @if (($item->department_id == auth()->user()->department_id || auth()->user()->isAdmin()) && !$item->finished())
+                                            <form action="{{route('head.tasks.destroy', $item->id)}}" method="POST">
+                                                @csrf @method('DELETE')
+                                                <button class="btn btn-icon btn-danger"
+                                                        onclick="return confirm('Topshiriqni o\'chirishni xoxlaysizmi? Topshiriq va unga tegishli barcha jarayonlar va fayllar qaytarish imkonisiz o\'chiriladi')"
+                                                ><x-svg.trash></x-svg.trash></button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                         @empty

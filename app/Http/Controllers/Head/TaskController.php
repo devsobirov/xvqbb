@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Head;
 
+use App\Events\TaskCancelled;
 use App\Events\TaskPublished;
 use App\Helpers\ProcessStatusHelper;
+use App\Helpers\TaskStatusHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Head\SaveTaskRequest;
 use App\Models\Branch;
@@ -69,6 +71,23 @@ class TaskController extends Controller
 
         return redirect()->route('head.process.task', ['task' => $task->id])
             ->with('success', "Topshiriq muvaffaqiyatli tasdiqlandi!");
+    }
+
+    public function destroy(Task $task)
+    {
+        abort_if(
+            !auth()->user()->isAdmin() && auth()->user()->department_id != $task->department_id,
+            403,
+            'Amaliyotni bajarish uchun huquqlar yetarli emas'
+        );
+
+        if (in_array($task->status, [TaskStatusHelper::STATUS_CLOSED, TaskStatusHelper::STATUS_ARCHIVED])) {
+            return redirect()->back()->with('msg', 'Yakunlangan topshiriqni o\'chirish mumkin emas!');
+        }
+
+        TaskCancelled::dispatch($task);
+
+        return redirect()->back()->with('success', 'Topshiriq va unga tegishli fayl va jarayonlar o\'chirildi');
     }
 
     public function deleteFile(Task $task, File $file)
