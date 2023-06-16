@@ -12,13 +12,21 @@ $filesCount = $task->files->count();
             <h2 class="page-title">
                 <span class="badge bg-azure mx-1">{{$task->code}}</span> - {{$task->title}}
             </h2>
+            <div class="d-flex align-items-center mt-2">
+                <p class="mb-1 text-muted text-nowrap">
+                    <x-svg.calendar></x-svg.calendar> {{$task->starts_at?->format('d.m.Y')}} - {{$task->expires_at?->format('d.m.Y')}}
+                </p>
+                <p class="mb-1 ms-2">
+                    , <span class="badge bg-{{$task->getStatusColor()}} badge-blink me-1"></span> {{$task->getStatusName()}}
+                </p>
+            </div>
         </div>
         <div class="page-body">
             <div class="row mb-4">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-6 col-sm-12 mb-1">
                     <x-task-progress :processes="$processes"></x-task-progress>
                 </div>
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-6 col-sm-12 mb-1">
                     <div class="card">
                         <div class="card-table table-responsive">
                             <table class="table table-vcenter">

@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         $tasks = Process::select(['id', 'branch_id', 'task_id','department_id', 'status', 'completed_at', 'processed_at', 'rejected_at'])
             ->where('branch_id', auth()->user()->branch_id)
-            ->whereNotIn('status', [ProcessStatusHelper::PENDING, ProcessStatusHelper::COMPLETED, ProcessStatusHelper::APPROVED])
+            ->whereNotIn('status', [ProcessStatusHelper::PENDING, ProcessStatusHelper::COMPLETED, ProcessStatusHelper::APPROVED, ProcessStatusHelper::UN_EXECUTED])
             ->with('task:id,expires_at,title,code', 'department:id,name')
             ->orderBy('status')->orderByDesc('id')
             ->get();

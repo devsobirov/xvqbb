@@ -20,12 +20,17 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $paginated = Task::with('department:id,name', 'user:id,name')
+        $paginated = Task::search(\request('search'))
+            ->byDepartment(\request('department_id'))->byStatus(\request('status'))
+            ->byPeriod(\request('starts_from'), \request('starts_ro'))
+            ->byExpirePeriod(\request('expires_from'), \request('expires_ro'))
+            ->with('department:id,name', 'user:id,name')
             ->withCount('processes as total')
             ->withCount(['processes as completed' => function ($query) {
                 $query->where('status', ProcessStatusHelper::APPROVED);
             }])
             ->latest()->paginate();
+
         return view('head.tasks.index', compact('paginated'));
     }
 

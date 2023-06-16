@@ -38,7 +38,7 @@
                         <thead>
                             <tr>
                                 <th>{{ __('FIO') }}</th>
-                                <th>{{ __('Lavozimi') }}</th>
+                                <th>Mutaxassis</th>
                                 <th>Telegram ID</th>
                                 <th>Yaratilgan</th>
                                 <th></th>

@@ -53,6 +53,17 @@ class Task extends Model
         $query->whereIn('status', [TaskStatusHelper::STATUS_CLOSED, TaskStatusHelper::STATUS_ARCHIVED]);
     }
 
+    public function scopeSearch(Builder $query, $search = '')
+    {
+        $query->when(!empty($search), function ($query) use ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('id', $search)
+                    ->orWhere('code', strtoupper($search))
+                    ->orWhere('title', 'like', "%$search%");
+            });
+        });
+    }
+
     public function scopeByPeriod(Builder $query, ?string $from = null, ?string $to = null)
     {
         $query->when(!empty($from), function ($query) use ($from) {
@@ -71,6 +82,24 @@ class Task extends Model
         });
     }
 
+    public function scopeByExpirePeriod(Builder $query, ?string $from = null, ?string $to = null)
+    {
+        $query->when(!empty($from), function ($query) use ($from) {
+            $query->whereDate('expires_at', '>=', $from);
+        });
+
+        $query->when(!empty($to), function ($query) use ($to) {
+            $query->whereDate('expires_at', '<=', $to);
+        });
+    }
+
+    public function scopeByStatus(Builder $query, $status = null)
+    {
+        $query->when(is_numeric($status), function ($query) use ($status) {
+            $query->where('status',  $status);
+        });
+    }
+
     public function getUploadDirName(): string
     {
         $base = $this->created_at?->format('m-Y') ?? date('m-Y');
@@ -86,14 +115,24 @@ class Task extends Model
         }
     }
 
+    public function pending(): bool
+    {
+        return  !$this->status || $this->status == TaskStatusHelper::STATUS_PENDING;
+    }
+
     public function published(): bool
     {
-        return !!$this->published_at;
+        return $this->status == TaskStatusHelper::STATUS_ACTIVE;
     }
 
     public function expired(): bool
     {
         return $this->status == TaskStatusHelper::STATUS_EXPIRED || $this->expires_at?->lte(now());
+    }
+
+    public function finished(): bool
+    {
+        return  in_array($this->status, [TaskStatusHelper::STATUS_CLOSED, TaskStatusHelper::STATUS_ARCHIVED]);
     }
 
     public function expiredComparingTo($completed_at = null): bool

@@ -16,7 +16,7 @@
                     </li>
 
                     @if(auth()->user()->isManager())
-                    <li class="nav-item @if(request()->routeIs('head.tasks.*')) active @endif">
+                    <li class="nav-item @if(request()->routeIs('head.tasks.*') || request()->routeIs('head.process.*')) active @endif">
                         <a class="nav-link" href="{{ route('head.tasks.index') }}" >
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <x-svg.tasks></x-svg.tasks>

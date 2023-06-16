@@ -49,7 +49,7 @@
                                     <p class="text-nowrap text-muted fst-italic fs-4">({{$item->task->expires_at?->diffForHumans()}})</p>
                                 </td>
                                 <td>
-                                    <p><span class="badge bg-{{$item->getStatusColor()}} me-1"></span> {{$item->getStatusName()}}</p>
+                                    <p class="text-nowrap"><span class="badge bg-{{$item->getStatusColor()}} me-1"></span> {{$item->getStatusName()}}</p>
                                 </td>
                                 <td>
                                     @if($timestamp = $item->lastStatusChanged())
