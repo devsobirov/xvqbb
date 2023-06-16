@@ -49,6 +49,7 @@ class TelegramController extends Controller
 
         if ($secret = $this->extractToken($text)) {
             $token = TelegramToken::where('token', $secret)->first();
+            $user = null;
 
             if ($token && $user = User::find($token?->user_id)) {
                 $user->telegram_chat_id = $chatId;
@@ -62,7 +63,7 @@ class TelegramController extends Controller
             } else {
                 \Log::alert('Telegram bot subscription failed', [
                     'token' => $secret,
-                    'user' => $user
+                    'user' => $user ?? null
                 ]);
 
                 (new TelegramBotService())->sendMessage($chatId, "Bildirishnomalarga obuna bo'lish muvaffaqiyatsiz yakunlandi, qayta urinib ko'ring yoki admin bilan bog'laning");
