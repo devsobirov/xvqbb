@@ -25,7 +25,7 @@ class CheckExpiredTasks implements ShouldQueue
     public function handle(): void
     {
         $tasks = Task::whereIn('status', [TaskStatusHelper::STATUS_ACTIVE])
-            ->where('expires_at', '<=', now())
+            ->whereDate('expires_at', '<=', now())
             ->get();
 
         if (count($tasks)) {

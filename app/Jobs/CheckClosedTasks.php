@@ -25,8 +25,9 @@ class CheckClosedTasks implements ShouldQueue
 
     public function handle(): void
     {
+        // Tasks expired 3 days ago or older
         $tasks = Task::whereIn('status', [TaskStatusHelper::STATUS_ACTIVE, TaskStatusHelper::STATUS_EXPIRED])
-            ->where('expires_at', '<=', now()->addDays(Task::CLOSE_AFTER_DAYS_SINCE_EXPIRED ?? 3))
+            ->whereDate('expires_at', '<=', now()->subDays(Task::CLOSE_AFTER_DAYS_SINCE_EXPIRED ?? 3))
             ->get();
 
         if ($total = count($tasks)) {
