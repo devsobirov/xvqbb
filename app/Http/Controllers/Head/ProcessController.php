@@ -55,7 +55,7 @@ class ProcessController extends Controller
     public function reject(Request $request, Process $process)
     {
         abort_if(
-            !auth()->user()->isAdmin() || auth()->user()->department_id != $process->department_id,
+            !auth()->user()->isAdmin() && auth()->user()->department_id != $process->department_id,
             403, 'Amaliyot uchun huquqlar yetarli emas'
         );
 

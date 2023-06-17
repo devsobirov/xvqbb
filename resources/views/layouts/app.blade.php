@@ -15,7 +15,7 @@
         .divide-y>:not(template):not(:last-child) {padding-bottom: unset !important;}
         .divide-y>:not(template):not(:first-child) {padding-top: unset !important;}
     </style>
-    <style>[x-cloak] { display: none !important; }</style>
+    <style>[x-cloak] { display: none !important; } .badge {user-select: all !important;} </style>
     <script>
         let defaultHeaders = {
             "Content-type": "application/json;charset=UTF-8",

@@ -22,7 +22,7 @@
                 </div>
                 <!-- Page title actions -->
                 <div class="col-auto ms-auto d-print-none">
-                <div class="d-md-flex d-sm-block">
+                <form action="{{route('head.tasks.index')}}" class="d-md-flex d-sm-block">
                     <input type="search" class="form-control d-inline-block w-9 me-1 mb-1" placeholder="Kod, id, nomi ..." name="search" value="{{request('search')}}">
                     <button class="btn me-1 btn-icon btn-azure mb-1" title="Izlash"><x-svg.search></x-svg.search></button>
                     <button type="button" class="btn btn-azure me-1 mb-1" data-bs-toggle="modal" data-bs-target="#modal-report" title="filtrlar qo'llash">
@@ -31,7 +31,7 @@
                     <a href="{{route('head.tasks.create')}}" class="btn btn-primary mb-1">
                         <x-svg.plus></x-svg.plus> Yangi topshiriq
                     </a>
-                </div>
+                </form>
                 </div>
             </div>
         </div>
