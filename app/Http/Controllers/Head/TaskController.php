@@ -94,7 +94,7 @@ class TaskController extends Controller
     {
         $this->checkTaskStatus($task);
         abort_if(
-            !auth()->user()->isAdmin() || $file->filable_id != auth()->user()->department_id,
+            !auth()->user()->isAdmin() && $file->filable_id != auth()->user()->department_id,
             403,
             'Faylni ochirish uchun huquqlar yetarli emas'
         );
@@ -133,7 +133,7 @@ class TaskController extends Controller
 
     protected function checkTaskStatus(Task $task)
     {
-        if ($task->published_at) {
+        if ($task->published()) {
             return redirect()->route('head.process.task', ['task' => $task->id])
                 ->with('msg', 'Tasdiqlangan topshiriqlar uchun ushbu amaliyot mumkin emas');
         }

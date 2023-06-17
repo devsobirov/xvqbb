@@ -37,7 +37,7 @@ class ProcessController extends Controller
     public function approve(Process $process)
     {
         abort_if(
-            !auth()->user()->isAdmin() || auth()->user()->department_id != $process->department_id,
+            !auth()->user()->isAdmin() && auth()->user()->department_id != $process->department_id,
             403, 'Amaliyot uchun huquqlar yetarli emas'
         );
 
