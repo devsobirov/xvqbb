@@ -26,13 +26,11 @@ class YourProcessCompleted extends Notification implements ShouldQueue
     {
         return TelegramMessage::create()
             ->to($notifiable->telegram_chat_id)
-            ->content("Salom aleykum " . $notifiable->name . ", filialingiz uchun topshiriq ijrosi yakunlandi: \r\n")
+            ->content("Salom aleykum " . $notifiable->name . ", filialingiz uchun topshiriq (". $this->process->task->code .") ijrosi ko'rik uchun yuborildi: \r\n")
             ->line("*Topshiriq: *" . $this->process->task?->title . " (".$this->process->task->code.")")
             ->line("*Filial: *" . $this->process->branch?->name)
             ->line("*Ma'sul: *" . $this->username)
             ->line("*Status: *" . $this->process->getStatusName())
-            ->line("*Jamg'arilgan ball: *" . $this->process->score)
-            ->line("*O'rin: *" . $this->process->position ?? '-')
             ->line("*Vaqt: *" . $this->process?->completed_at->format('d-m-Y H:i'));
     }
 

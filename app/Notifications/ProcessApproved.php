@@ -31,6 +31,8 @@ class ProcessApproved extends Notification implements ShouldQueue
             ->line("*Filial: *" . $this->process->branch?->name)
             ->line("*Ma'sul: *" .  $this->process->department?->name)
             ->line("*Vaqt: *" . $this->process?->approved_at->format('d-m-Y H:i'))
+            ->line("*Jamg'arilgan ball: *" . $this->process->score)
+            ->line("*O'rin: *" . $this->process->position ?? '-')
             ->button('Batafsil', route('branch.tasks.show', $this->process->task_id));
     }
 
