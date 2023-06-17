@@ -38,7 +38,7 @@ class HandleProcessResults
         return [
             'score' => $this->getScore(),
             'position' => $this->getPosition(),
-            'accomplished' => $this->isAccomplished()
+            'accomplished' => $this->isAccomplished(),
         ];
     }
 
@@ -108,6 +108,7 @@ class HandleProcessResults
             $this->totalApprovedProcesses = DB::table('processes')
                 ->where('task_id', $this->process->task_id)
                 ->where('status', ProcessStatusHelper::APPROVED)
+                ->whereNot('id', $this->process->id)
                 ->count();
         }
 
