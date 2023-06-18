@@ -15,10 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->job(ScheduleStatusLoggerJob::class)->hourly();
+        $schedule->job(ScheduleStatusLoggerJob::class)->everyTwoHours();
         $schedule->job(CheckExpiredTasks::class)->dailyAt('07:00');
-        $schedule->job(CheckClosedTasks::class)->dailyAt('07:05');
+        $schedule->job(CheckClosedTasks::class)->dailyAt('17:00');
     }
 
     /**
