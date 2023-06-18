@@ -60,6 +60,7 @@ Route::middleware(['auth', 'role'])->group(function () {
 
         Route::controller(StatsController::class)->prefix('stats')->as('stats.')->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::post('/', 'export')->name('export');
         });
 
         //Route::post('/processes/handle/{task}', ProcessController::class)->name('task-processes');

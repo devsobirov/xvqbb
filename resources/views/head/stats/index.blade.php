@@ -20,7 +20,7 @@
 
 @endphp
 @section('content')
-    <div class="page-body">
+    <div class="page-body" x-data="statsData">
         <div class="container-xl">
 
             <div class="row g-2 align-items-center mb-4">
@@ -39,6 +39,10 @@
                         <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
                             <x-svg.filter></x-svg.filter>
                             Filterlar qo'llash @if($filters) ({{$filters}}) @endif
+                        </a>
+                        <a href="#" @click.prevent="exportStats()" id="export-stats-btn" class="btn btn-green d-none d-sm-inline-block">
+                            <x-svg.excel></x-svg.excel>
+                            Yuklab olish
                         </a>
                     </div>
                 </div>
@@ -215,6 +219,25 @@
 
         </div>
     </div>
-
+    <div x-show="false" id="export-from-wrapper"></div>
     @include('head.stats._modal-filters')
+@endsection
+@section('custom_scripts')
+    <script>
+        function statsData() {
+            return {
+                exportStats() {
+                    let form = document.createElement('form');
+                    let formWrapper = document.getElementById('export-from-wrapper');
+                    formWrapper.innerHTML = '';
+                    formWrapper.appendChild(form);
+                    form.setAttribute('method', 'POST');
+                    form.setAttribute('action', "{{route('head.stats.export')}}")
+                    form.innerHTML = document.getElementById('filter-stats-form').innerHTML;
+                    form.innerHTML += `{{csrf_field()}}`;
+                    form.submit();
+                }
+            }
+        }
+    </script>
 @endsection

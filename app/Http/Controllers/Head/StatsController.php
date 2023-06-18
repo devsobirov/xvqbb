@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Head;
 
+use App\Exports\StatsExport;
 use App\Helpers\ProcessStatusHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
@@ -11,10 +12,28 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StatsController extends Controller
 {
     public function index(Request $request)
+    {
+        $data = $this->getStatsData($request);
+        return view('head.stats.index', $data);
+    }
+
+    public function export(Request $request)
+    {
+        $data = $this->getStatsData($request);
+        $filename = 'hisobot-'.Carbon::parse($data['from'])->format('d_M_Y').'-'.Carbon::parse($data['to'])->format('d_M_Y');
+
+        Log::info('Generating report file - '. $filename.".xlsx", ['user' => auth()->user()]);
+
+        return Excel::download(new StatsExport($data), $filename.'.xlsx');
+    }
+
+    protected function getStatsData(Request $request): array
     {
         $min = DB::table('processes')->min('period');
         $max = DB::table('processes')->max('period');
@@ -60,10 +79,10 @@ class StatsController extends Controller
         $totalValidityRate = $totalProcesses ? round($totalValid * 100/$totalProcesses, 2) : 0;
         $totalCompletedRate = $totalProcesses ? round($totalCompleted * 100/$totalProcesses, 2) : 0;
 
-        return view('head.stats.index', compact(
+        return compact(
             'from', 'to', 'min', 'max',
             'totalTasks', 'totalProcesses', 'totalValid', 'totalCompleted',
             'totalValidityRate',  'totalCompletedRate', 'branches', 'departments'
-        ));
+        );
     }
 }
