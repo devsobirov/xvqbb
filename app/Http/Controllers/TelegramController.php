@@ -42,12 +42,13 @@ class TelegramController extends Controller
         if (!empty($updates['message']['chat']['id'])) {
             // Chat ID
             $chatId = $updates['message']['chat']['id'];
-            $text = strtolower(trim($updates['message']['text']));
-        } else {
-            return 'OK';
         }
 
-        if ($secret = $this->extractToken($text)) {
+        if (!empty($updates['message']['text'])) {
+            $text = strtolower(trim($updates['message']['text']));
+        }
+
+        if ($chatId && $text && $secret = $this->extractToken($text)) {
             $token = TelegramToken::where('token', $secret)->first();
             $user = null;
 
