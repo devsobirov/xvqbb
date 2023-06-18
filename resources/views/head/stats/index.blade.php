@@ -142,7 +142,7 @@
                                         <td class="w-50">{{$branch->name}}</td>
                                         <td>{{$branch->total}}</td>
                                         <td>
-                                            <span class="badge">{{$branch->score}}</span>
+                                            <span class="badge">{{is_numeric($branch->score) ? $branch->score : '-'}}</span>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -18,7 +18,7 @@
             <td>{{$loop->iteration}}</td>
             <td>{{$branch->name}}</td>
             <td>{{$branch->total}} ta</td>
-            <td>{{$branch->score}} ball</td>
+            <td>{{is_numeric($branch->score) ? ($branch->score . ' ball') : '-'}}</td>
         </tr>
     @endforeach
     </tbody>
