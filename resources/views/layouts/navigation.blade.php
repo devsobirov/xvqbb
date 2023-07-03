@@ -49,6 +49,16 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="nav-item @if(request()->routeIs('branch.stats.*')) active @endif">
+                            <a class="nav-link" href="{{ route('branch.stats.index') }}" >
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <x-svg.stats></x-svg.stats>
+                            </span>
+                                <span class="nav-link-title">
+                                Statistika
+                            </span>
+                            </a>
+                        </li>
                     @endif
                     @if(auth()->user()->isAdmin())
 

@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Head\ProcessController;
 use App\Http\Controllers\Head\TaskController;
-use App\Http\Controllers\Head\StatsController;
+use App\Http\Controllers\Branch\StatsController as BranchStats;
+use App\Http\Controllers\Head\StatsController as HeadStats;
 
 Route::controller(TelegramController::class)->prefix('telegram')->as('telegram.')->group(function () {
     Route::get('set-webhook', 'setWebhook')->name('setWebhook')->middleware('role:'. Role::ADMIN);
@@ -58,7 +59,7 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::post('/process/reject/{process}', 'reject')->name('reject');
         });
 
-        Route::controller(StatsController::class)->prefix('stats')->as('stats.')->group(function () {
+        Route::controller(HeadStats::class)->prefix('stats')->as('stats.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'export')->name('export');
         });
@@ -76,6 +77,11 @@ Route::middleware(['auth', 'role'])->group(function () {
             Route::post('/task/complete/{process}', 'complete')->name('complete');
             Route::get('/get-files/{process}', 'getFiles')->name('getFiles');
             Route::delete('/delete-file/{process}/{file?}', 'deleteFile')->name('deleteFile');
+        });
+
+        Route::controller(BranchStats::class)->prefix('stats')->as('stats.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'export')->name('export');
         });
     });
 });
